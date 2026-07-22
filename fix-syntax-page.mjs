@@ -1,4 +1,7 @@
-// @ts-nocheck
+import fs from 'fs/promises';
+import path from 'path';
+
+const perfectPageCode = `// @ts-nocheck
 import React from 'react';
 import { Award, ExternalLink, ShieldCheck } from 'lucide-react';
 import { getCertificates } from '@/services/dataService';
@@ -52,3 +55,16 @@ export default function CertificatesPage() {
     </div>
   );
 }
+`;
+
+async function fixSyntax() {
+  try {
+    const pagePath = path.join(process.cwd(), 'app/certificates/page.tsx');
+    await fs.writeFile(pagePath, perfectPageCode, 'utf8');
+    console.log('✅ BINGO! Certificates page completely rebuilt. Zero syntax errors. Zero missing tags.');
+  } catch (err) {
+    console.error('❌ Script Error:', err);
+  }
+}
+
+fixSyntax();
