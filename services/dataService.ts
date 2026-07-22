@@ -55,6 +55,9 @@ export function getSkills(): SkillCategory[] {
 
 export function getProjects(): Project[] {
   return [
+    // ---------------------------------------------------------
+    // 1. UBER RIDE ANALYTICS
+    // ---------------------------------------------------------
     {
       id: "uber-analytics",
       title: "Uber Ride Analytics Dashboard",
@@ -62,7 +65,7 @@ export function getProjects(): Project[] {
       category: "Power BI",
       tags: ["Power BI", "DAX", "Power Query"],
       toolsUsed: ["Power BI", "DAX", "Power Query"],
-      image: "/projects/uber.jpeg",
+      image: "/assets/uber.jpeg",
       featured: true,
       executiveSummary: [
         "In the highly competitive ride-hailing industry, optimizing fleet utilization and dynamic pricing is critical for margin expansion. This project involved deep-diving into a massive dataset of urban mobility patterns.",
@@ -96,6 +99,10 @@ export function getProjects(): Project[] {
       keyDeliverables: ["Executive Power BI Dashboard", "DAX Measure Dictionary", "Strategic Recommendations Deck"],
       outcomeImpact: "Delivered an enterprise-grade operational diagnostic tool that bridged the gap between raw data and actionable strategic deployment, mirroring standards expected at top-tier consulting firms."
     },
+
+    // ---------------------------------------------------------
+    // 2. BMW BUSINESS STRATEGY
+    // ---------------------------------------------------------
     {
       id: "bmw-strategy",
       title: "BMW Business Strategy",
@@ -103,7 +110,7 @@ export function getProjects(): Project[] {
       category: "PowerPoint",
       tags: ["PowerPoint", "Strategy", "Corporate Finance"],
       toolsUsed: ["PowerPoint", "Strategy"],
-      image: "/projects/bmw_ppt.jpeg",
+      image: "/assets/bmw_ppt.jpeg",
       liveUrl: "https://1drv.ms/p/c/25C3AC5424753CC0/IQAmourAEOwiQJUDHGf7qSZYAfVf4LEpxkwfXU9dB2pTGQo?e=UxTunX",
       featured: true,
       executiveSummary: [
@@ -136,6 +143,10 @@ export function getProjects(): Project[] {
       keyDeliverables: ["Strategic SWOT Matrix", "Market Expansion Playbook", "Executive Presentation Deck"],
       outcomeImpact: "Engineered a Tier-1 consulting grade strategy presentation that meticulously dissects competitive moats and maps the trajectory for future corporate survival."
     },
+
+    // ---------------------------------------------------------
+    // 3. AMAZON MARKET EXPANSION
+    // ---------------------------------------------------------
     {
       id: "amazon-strategy",
       title: "Amazon Business Analysis",
@@ -143,7 +154,7 @@ export function getProjects(): Project[] {
       category: "Advanced Excel",
       tags: ["Advanced Excel", "Financial Modeling", "Strategy"],
       toolsUsed: ["Advanced Excel", "Financial Modeling", "PowerPoint"],
-      image: "/projects/amazon_ppt.jpeg",
+      image: "/assets/Amazon_ppt.jpeg",
       liveUrl: "https://1drv.ms/p/c/25C3AC5424753CC0/IQByaJW9Nvd_RLExbFZqHVWcAflaxd-ndo7PidNSpZnAiQ4?e=Sjmwrf",
       featured: true,
       executiveSummary: [
@@ -177,6 +188,10 @@ export function getProjects(): Project[] {
       keyDeliverables: ["3-Statement Financial Model", "DCF Valuation Schedule", "Sensitivity Analysis Tables", "Executive Presentation"],
       outcomeImpact: "Delivered an institutional-grade financial model that mirrors the analytical rigor demanded by top-tier investment banks and corporate strategy teams."
     },
+
+    // ---------------------------------------------------------
+    // 4. H2 VENTURE EXCEL
+    // ---------------------------------------------------------
     {
       id: "h2-venture",
       title: "H2 Venture Financial Analysis",
@@ -184,7 +199,7 @@ export function getProjects(): Project[] {
       category: "Advanced Excel",
       tags: ["Advanced Excel", "Venture Capital", "Financial Modeling"],
       toolsUsed: ["Advanced Excel", "Financial Modeling", "Scenario Analysis"],
-      image: "/projects/h2_venture.jpeg",
+      image: "/assets/h2_venture.jpeg",
       liveUrl: "https://1drv.ms/x/c/25C3AC5424753CC0/IQBgQIzkWjLnSo_uKB2ETmCeAZt4Jvwm7LfsGANFlXp7dKI?e=e3K0hz",
       featured: true,
       executiveSummary: [
@@ -217,6 +232,10 @@ export function getProjects(): Project[] {
       keyDeliverables: ["Venture Capital Financial Model", "Cap Table Analysis", "Scenario Dashboard"],
       outcomeImpact: "Created an investment-grade venture model that provides laser-focused clarity on cash runway and unit economics, essential for any FP&A professional in the tech sector."
     },
+
+    // ---------------------------------------------------------
+    // 5. INCREDIBLE INDIA
+    // ---------------------------------------------------------
     {
       id: "incredible-india",
       title: "Incredible India Tourism Strategy",
@@ -224,7 +243,7 @@ export function getProjects(): Project[] {
       category: "PowerPoint",
       tags: ["Strategy", "PowerPoint", "Macroeconomics"],
       toolsUsed: ["PowerPoint", "Market Research", "Strategy"],
-      image: "/projects/india_ppt.jpeg",
+      image: "/assets/india_ppt.jpeg.png",
       liveUrl: "https://1drv.ms/p/c/25C3AC5424753CC0/IQDEKJ_O6YBuQ6SP9hNsOxWPAVNdQ0FaHSV2ru-boRnHlbo?e=17f5Ey",
       featured: true,
       executiveSummary: [
@@ -257,6 +276,10 @@ export function getProjects(): Project[] {
       keyDeliverables: ["Macro-Economic Strategy Deck", "Policy Recommendation Brief", "Visual Infographics"],
       outcomeImpact: "Delivered a McKinsey-style strategic briefing that elevates raw tourism statistics into a compelling vision for national economic growth."
     },
+
+    // ---------------------------------------------------------
+    // 6. ANDROID PORTFOLIO APP
+    // ---------------------------------------------------------
     {
       id: "android-portfolio",
       title: "Native Android Portfolio App",
@@ -264,7 +287,7 @@ export function getProjects(): Project[] {
       category: "Android",
       tags: ["Android SDK", "Mobile UI", "Java/Kotlin"],
       toolsUsed: ["Android Studio", "XML", "Mobile App Development"],
-      image: "/projects/Android_App.jpeg",
+      image: "/assets/Android_App.jpeg",
       liveUrl: "https://github.com/pa8213243-sudo/ParvejPortfolio/releases/download/v1.0.0/app-release.apk",
       featured: true,
       executiveSummary: [
@@ -297,6 +320,10 @@ export function getProjects(): Project[] {
       keyDeliverables: ["Compiled APK File", "Interactive Mobile UI", "Source Code Repository"],
       outcomeImpact: "Engineered a tangible, installable product that serves as a powerful personal branding tool, proving technical competence beyond the spreadsheet."
     },
+
+    // ---------------------------------------------------------
+    // 7. HUSKIE MOTOR EXCEL
+    // ---------------------------------------------------------
     {
       id: "huskie-motor",
       title: "Huskie Motor Operations Analysis",
@@ -304,7 +331,7 @@ export function getProjects(): Project[] {
       category: "Advanced Excel",
       tags: ["Supply Chain", "Advanced Excel", "Operations"],
       toolsUsed: ["Excel", "VLOOKUP/INDEX-MATCH", "Pivot Tables"],
-      image: "/projects/huskie_motor.jpeg",
+      image: "/assets/huskie_motor.jpeg",
       liveUrl: "https://1drv.ms/x/c/25C3AC5424753CC0/IQCBkr4p3sKyS56DqLOhEZuRAaA8pCvzItA3AiHdqcJgp7g?e=EpglaD",
       featured: true,
       executiveSummary: [
@@ -337,6 +364,10 @@ export function getProjects(): Project[] {
       keyDeliverables: ["Inventory Optimization Model", "EOQ Calculator", "Supplier Risk Analysis"],
       outcomeImpact: "Delivered a rigorous supply chain optimization model that directly targets the balance sheet, demonstrating a deep understanding of operational finance and working capital management."
     },
+
+    // ---------------------------------------------------------
+    // 8. AD CAMPAIGN EXCEL
+    // ---------------------------------------------------------
     {
       id: "ad-campaign",
       title: "Digital Ad Campaign ROI Analysis",
@@ -344,7 +375,7 @@ export function getProjects(): Project[] {
       category: "Advanced Excel",
       tags: ["Marketing Analytics", "ROI Analysis", "Excel"],
       toolsUsed: ["Excel", "Pivot Tables", "Data Visualization"],
-      image: "/projects/ad_campaign.jpeg",
+      image: "/assets/ad_campaign.jpeg",
       liveUrl: "https://1drv.ms/x/c/25C3AC5424753CC0/IQCk8lYOyo5vRrSzyKrhqtLzAX2NQk7Tk2-iLaL2ufh_etA?e=EBPlxf",
       featured: true,
       executiveSummary: [
@@ -377,6 +408,10 @@ export function getProjects(): Project[] {
       keyDeliverables: ["Campaign Performance Dashboard", "ROAS Optimization Report", "Cross-Platform Analysis"],
       outcomeImpact: "Delivered a highly commercial marketing analytics tool that bridges the gap between creative marketing efforts and hardcore financial ROI metrics."
     },
+
+    // ---------------------------------------------------------
+    // 9. BUSINESS ANALYSIS EXCEL
+    // ---------------------------------------------------------
     {
       id: "business-analysis",
       title: "Enterprise Corporate Performance Dashboard",
@@ -384,7 +419,7 @@ export function getProjects(): Project[] {
       category: "Advanced Excel",
       tags: ["Corporate Finance", "Dashboarding", "Excel"],
       toolsUsed: ["Advanced Excel", "Financial Reporting", "Data Modeling"],
-      image: "/projects/business_analysis.jpeg",
+      image: "/assets/business_analysis.jpeg",
       liveUrl: "https://1drv.ms/x/c/25C3AC5424753CC0/IQDSKxCnOaQ7T6XgwsAH7Q2dAco3sSdhusbJ1Go1YYQ9kg8?e=mU66Oo",
       featured: true,
       executiveSummary: [
@@ -418,6 +453,10 @@ export function getProjects(): Project[] {
       keyDeliverables: ["Executive Summary Dashboard", "Budget vs Actual Variance Report", "KPI Tracking Matrix"],
       outcomeImpact: "Engineered a master-level corporate performance tool that demonstrates a profound capability to synthesize complex, multi-departmental data into a singular strategic narrative."
     },
+
+    // ---------------------------------------------------------
+    // 10. M&A JOB SIMULATION
+    // ---------------------------------------------------------
     {
       id: "ma-latham",
       title: "M&A Strategic Analysis",
@@ -425,7 +464,7 @@ export function getProjects(): Project[] {
       category: "PowerPoint",
       tags: ["M&A", "Corporate Finance", "Due Diligence"],
       toolsUsed: ["PowerPoint", "Financial Analysis", "Strategy"],
-      image: "/projects/business_analysis.jpeg",
+      image: "/assets/microsoft_ppt.jpeg",
       liveUrl: "https://1drv.ms/p/c/25C3AC5424753CC0/IQB2hXrTbZwZQLNkoTf7Xn1YAe96XVWz1uEPRSrixTJE_Zs?e=1v6Ufo",
       featured: true,
       executiveSummary: [
@@ -458,6 +497,10 @@ export function getProjects(): Project[] {
       keyDeliverables: ["M&A Pitch Deck", "Valuation Football Field", "Synergy & Dilution Analysis"],
       outcomeImpact: "Delivered an elite investment banking style presentation demonstrating an advanced grasp of corporate restructuring, valuation mechanics, and strategic risk management."
     },
+
+    // ---------------------------------------------------------
+    // 11. HR ANALYTICS
+    // ---------------------------------------------------------
     {
       id: "hr-analytics",
       title: "HR Analytics Dashboard",
@@ -465,7 +508,7 @@ export function getProjects(): Project[] {
       category: "Power BI",
       tags: ["Power BI", "DAX", "Power Query"],
       toolsUsed: ["Power BI", "DAX", "Power Query"],
-      image: "/projects/Hr_analytics.jpeg",
+      image: "/assets/Hr_analytics.jpeg",
       executiveSummary: [
         "Human capital is the largest expense and greatest asset for any enterprise. This HR Analytics project tackles the critical issue of employee retention.",
         "By analyzing historical attrition data, demographic factors, and compensation metrics, this dashboard identifies the root causes of employee turnover and provides predictive insights for HR leadership."
@@ -496,6 +539,10 @@ export function getProjects(): Project[] {
       keyDeliverables: ["Interactive Power BI Dashboard", "Attrition Root-Cause Analysis", "Retention Strategy Memo"],
       outcomeImpact: "Delivered a strategic HR tool that shifts human resources from an administrative function to a proactive, data-driven strategic partner."
     },
+
+    // ---------------------------------------------------------
+    // 12. QA RAMCO FINANCIAL
+    // ---------------------------------------------------------
     {
       id: "qa-ramco",
       title: "QA Ramco Financial Dashboard",
@@ -503,7 +550,7 @@ export function getProjects(): Project[] {
       category: "Power BI",
       tags: ["Power BI", "Power Query", "Finance"],
       toolsUsed: ["Power BI", "Power Query", "DAX"],
-      image: "/projects/QA_aramco_dashboard.jpeg",
+      image: "/assets/QA_aramco_dasboard.jpeg",
       executiveSummary: [
         "Cash is the lifeblood of any heavy industry operation. This project developed a comprehensive financial and operational monitoring dashboard for QA Ramco.",
         "The focus was strictly on liquidity management, Accounts Receivable (AR) aging, and revenue realization against operational milestones in a complex B2B environment."
@@ -547,6 +594,7 @@ export function getTimeline() {
     { id: "6", title: "Future CFO", organization: "ADNOC / UAE Energy Sector", startDate: "2030+", endDate: "2030+", description: "Targeting leadership roles in strategic corporate finance.", type: "Project", status: "Future Goal" }
   ];
 }
+
 export function getCertificates() {
   return [
     { id: "cma-part1", title: "US CMA Part 1 Cleared (380/500)", issuer: "IMA", date: "2024", category: "Professional" },
