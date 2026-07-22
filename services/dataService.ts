@@ -595,7 +595,20 @@ export function getTimeline() {
     { id: "6", title: "Future CFO", organization: "ADNOC / UAE Energy Sector", startDate: "2030+", endDate: "2030+", description: "Targeting leadership roles in strategic corporate finance.", type: "Project", status: "Future Goal" }
   ];
 }
-export function getCertificates() {
+export interface Certificate {
+  id: string;
+  title: string;
+  issuer: string;
+  date: string;
+  category: string;
+  credentialUrl?: string;
+  verificationUrl?: string;
+  image?: string;
+  badgeImage?: string;
+  certificateImage?: string;
+}
+
+export function getCertificates(): Certificate[] {
   return [
     { id: "cma-part1", title: "US CMA Part 1 Cleared (380/500)", issuer: "IMA", date: "2024", category: "Professional" },
     { id: "power-bi-cert", title: "Microsoft Power BI Data Analyst Professional", issuer: "Coursera", date: "2024", category: "Analytics" }
