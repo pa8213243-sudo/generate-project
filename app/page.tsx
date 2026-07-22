@@ -205,8 +205,8 @@ export default function CommandDashboard() {
           <div className="absolute inset-0 bg-gradient-to-t from-[#0B1120] via-transparent to-transparent" />
           <div className="absolute right-4 top-2 text-white/10 font-serif text-7xl pointer-events-none">“</div>
           <p className="text-[13px] font-sans text-white/90 leading-relaxed italic relative z-10 w-[85%] drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
-            "The goal is not to be in the best company, but to build something that outlives me."
-          </p>
+            &quot;The goal is not to be in the best company, but to build something that outlives me.&quot;
+         </p>
           <div className="mt-4 text-xs font-mono text-accent relative z-10 font-bold">— Parvej</div>
         </div>
       </div>
