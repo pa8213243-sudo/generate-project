@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@keyframes earthRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes cloudDrift {
+  0% { transform: translateX(-6px) translateY(0px); opacity: 0.55; }
+  50% { transform: translateX(6px) translateY(-3px); opacity: 0.9; }
+  100% { transform: translateX(-6px) translateY(0px); opacity: 0.55; }
+}
+
+.animate-earth-spin {
+  animation: earthRotate 28s linear infinite;
+  transform-origin: center;
+}
+
+.animate-cloud-float {
+  animation: cloudDrift 8s ease-in-out infinite;
+  transform-origin: center;
+}
+
+body { background-color: #02040A; color: white; }

@@ -1,0 +1,38 @@
+[
+  {
+    "category": "Data & Analytics Tools",
+    "skill": "Power BI (DAX, Dashboards)",
+    "level": "Advanced",
+    "displayOrder": 1
+  },
+  {
+    "category": "Data & Analytics Tools",
+    "skill": "Advanced Excel & Power Query",
+    "level": "Advanced",
+    "displayOrder": 2
+  },
+  {
+    "category": "Data & Analytics Tools",
+    "skill": "SQL",
+    "level": "Intermediate",
+    "displayOrder": 3
+  },
+  {
+    "category": "Financial Expertise",
+    "skill": "Financial Planning & Analysis (FP&A)",
+    "level": "Advanced",
+    "displayOrder": 4
+  },
+  {
+    "category": "Financial Expertise",
+    "skill": "Financial Modeling",
+    "level": "Advanced",
+    "displayOrder": 5
+  },
+  {
+    "category": "Financial Expertise",
+    "skill": "Variance Analysis & Budgeting",
+    "level": "Advanced",
+    "displayOrder": 6
+  }
+]

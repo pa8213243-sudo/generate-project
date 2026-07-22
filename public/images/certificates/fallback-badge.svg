@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="220" height="220" viewBox="0 0 220 220">
+  <rect width="220" height="220" rx="28" fill="#0b1220" stroke="#334155" stroke-width="3"/>
+  <circle cx="110" cy="110" r="72" fill="none" stroke="#22d3ee" stroke-width="14"/>
+  <path d="M110 58 L126 95 L166 99 L136 124 L147 162 L110 142 L73 162 L84 124 L54 99 L94 95 Z" fill="#f59e0b"/>
+  <text x="110" y="186" text-anchor="middle" fill="#e2e8f0" font-family="Arial, sans-serif" font-size="16" font-weight="700">CERTIFIED</text>
+</svg>

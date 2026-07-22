@@ -1,0 +1,65 @@
+[
+  {
+    "id": "cert-cma-1",
+    "title": "US Certified Management Accountant (CMA) - Part 1 Cleared",
+    "issuer": "Institute of Management Accountants (IMA)",
+    "issueDate": "2026",
+    "category": "Finance",
+    "displayOrder": 1,
+    "featured": true,
+    "skills": ["Corporate Finance", "Cost Management", "Internal Controls"],
+    "credentialId": "IMA-2026-CMA-P1",
+    "credentialUrl": "https://www.imanet.org/",
+    "verificationUrl": "https://www.imanet.org/",
+    "badgeImage": "/images/certificates/fallback-badge.svg"
+  },
+  {
+    "id": "cert-bcg",
+    "title": "BCG Strategy Consulting Job Simulation",
+    "issuer": "Forage",
+    "issueDate": "TBD",
+    "category": "Strategy",
+    "displayOrder": 2,
+    "featured": true,
+    "credentialUrl": "https://www.theforage.com/",
+    "verificationUrl": "https://www.theforage.com/",
+    "badgeImage": "/images/certificates/fallback-badge.svg"
+  },
+  {
+    "id": "cert-mna",
+    "title": "M&A Job Simulation - Latham & Watkins",
+    "issuer": "Forage",
+    "issueDate": "TBD",
+    "category": "Finance",
+    "displayOrder": 3,
+    "featured": false,
+    "credentialUrl": "https://www.theforage.com/",
+    "verificationUrl": "https://www.theforage.com/",
+    "badgeImage": "/images/certificates/fallback-badge.svg"
+  },
+  {
+    "id": "cert-powerbi",
+    "title": "Microsoft Power BI Data Analyst Professional Certificate",
+    "issuer": "Coursera",
+    "issueDate": "TBD",
+    "category": "Data Analytics",
+    "displayOrder": 4,
+    "featured": true,
+    "skills": ["Power BI", "DAX", "Data Modeling"],
+    "credentialUrl": "https://www.coursera.org/",
+    "verificationUrl": "https://www.coursera.org/",
+    "badgeImage": "/images/certificates/fallback-badge.svg"
+  },
+  {
+    "id": "cert-ima-ai",
+    "title": "IMA Ethics of AI: Implications for the Management Accountant",
+    "issuer": "Institute of Management Accountants",
+    "issueDate": "April 2026",
+    "category": "Finance / AI",
+    "displayOrder": 5,
+    "featured": false,
+    "credentialUrl": "https://www.imanet.org/",
+    "verificationUrl": "https://www.imanet.org/",
+    "badgeImage": "/images/certificates/fallback-badge.svg"
+  }
+]

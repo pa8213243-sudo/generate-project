@@ -1,0 +1,53 @@
+[
+  {
+    "id": "t-1",
+    "title": "School Education",
+    "organization": "High School",
+    "startDate": "2018",
+    "endDate": "2021",
+    "description": "Foundation years of learning.",
+    "type": "Education",
+    "status": "Completed"
+  },
+  {
+    "id": "t-2",
+    "title": "Bachelor of Commerce (Honours)",
+    "organization": "N.C. Bodiwala & Prin. M.C. Desai Commerce College",
+    "location": "Ahmedabad, Gujarat",
+    "startDate": "2023",
+    "endDate": "2027",
+    "description": "Pursuing degree with focus on commerce, finance, and accounting. Currently in Semester 7.",
+    "type": "Education",
+    "status": "In Progress"
+  },
+  {
+    "id": "t-3",
+    "title": "CMA US Preparation",
+    "organization": "Institute of Management Accountants (IMA) / Miles Education",
+    "startDate": "2024",
+    "endDate": "Present",
+    "description": "Part 1 cleared in first attempt (380/500). Part 2 currently in progress. Mentored by industry professionals.",
+    "type": "Certification",
+    "status": "In Progress"
+  },
+  {
+    "id": "t-4",
+    "title": "FP&A Professional Experience",
+    "organization": "Targeted Companies (India)",
+    "startDate": "Future",
+    "endDate": "Future",
+    "description": "Acquiring 2 years of solid core experience in financial planning and analysis.",
+    "type": "Experience",
+    "status": "Future Goal"
+  },
+  {
+    "id": "t-5",
+    "title": "Strategic Finance & Oil/Gas Sector",
+    "organization": "ADNOC / UAE Region",
+    "startDate": "Future",
+    "endDate": "Future",
+    "description": "Targeting senior FP&A roles in Abu Dhabi National Oil Company (ADNOC) and broader UAE oil & gas sector.",
+    "type": "Experience",
+    "status": "Future Goal"
+  }
+]

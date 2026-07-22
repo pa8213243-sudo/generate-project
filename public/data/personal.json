@@ -1,0 +1,26 @@
+{
+  "name": "Parvej Alam Sulemanali Ansari",
+  "email": "pa8213243@gmail.com",
+  "phone": "+91 7383075193",
+  "location": "Ahmedabad, Gujarat, India",
+  "title": "CMA (US) Candidate | FP&A | Strategic Finance | Business Intelligence",
+  "summary": "CMA (US) Candidate with Part 1 cleared (380/500) and a strong foundation in Financial Planning & Analysis (FP&A), Strategic Finance, Financial Reporting, and Business Intelligence. Experienced in building interactive dashboards, financial models, and data-driven reports using Power BI, Advanced Excel, and Power Query.",
+  "education": [
+    {
+      "degree": "US CMA",
+      "institution": "Institute of Management Accountants (IMA)",
+      "timeline": "Current",
+      "details": "Part 1 Cleared in the First Attempt (380/500). Part 2 in Progress."
+    },
+    {
+      "degree": "Bachelor of Commerce (Honours)",
+      "institution": "N.C. Bodiwala & Prin. M.C. Desai Commerce College",
+      "timeline": "2023 - 2027",
+      "details": "Current Semester: 7"
+    }
+  ],
+  "socials": {
+    "github": "https://github.com/pa8213243-sudo/ParvejPortfolio",
+    "linkedin": "https://www.linkedin.com/in/parvej-alam-sulemanali-ansari-14808928b/"
+  }
+}
