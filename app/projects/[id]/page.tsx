@@ -28,6 +28,7 @@ export default function ProjectDetail({ params }: { params: { id: string } }) {
       <div className="space-y-6">
         <div className="w-full aspect-[21/9] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black">
           {/* Ensure the image scales properly */}
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={project.image} alt={project.title} className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity" />
         </div>
         
