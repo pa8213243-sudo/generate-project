@@ -50,37 +50,7 @@ export default function CertificatesVault() {
                   </div>
                 )}
 
-                {cert.skills && (
-                  <div className="flex flex-wrap gap-2">
-                    {cert.skills.map(skill => (
-                      <span key={skill} className="px-2 py-1 bg-white/5 border border-white/10 rounded text-xs text-white/70">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <div className="shrink-0 flex flex-col items-end gap-3 md:items-start">
-                <div className="relative h-16 w-16 overflow-hidden rounded-lg border border-white/10 bg-white/10 p-2">
-                  <Image src={badgeSrc} alt={`${cert.title} badge`} fill className="object-contain" />
-                </div>
-                {cert.title.includes("CMA") ? (
-                  <div className="flex items-center gap-2 px-3 py-1 bg-success/10 border border-success/30 text-success rounded-full text-xs font-bold tracking-wide">
-                    <CheckCircle className="w-4 h-4" /> VERIFIED (380/500)
-                  </div>
-                ) : (
-                  <div className="flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/10 text-white/50 rounded-full text-xs font-bold tracking-wide">
-                    <ShieldAlert className="w-4 h-4" /> AUTHENTICATED
-                  </div>
-                )}
-                <span className="flex items-center gap-1 text-sm text-accent">
-                  Open credential <ExternalLink className="w-4 h-4" />
-                </span>
-              </div>
-            </a>
-          );
-        })}
+                
       </div>
     </div>
   );
