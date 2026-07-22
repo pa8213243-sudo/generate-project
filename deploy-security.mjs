@@ -59,7 +59,6 @@ export const Turnstile = ({ onVerify }: { onVerify: (token: string) => void }) =
     content: `export function getVisitorId(): string {
   if (typeof window === 'undefined') return 'server';
   
-  // Do NOT rely only on localStorage. Fallback to session/cookie mechanisms.
   let vid = localStorage.getItem('jarvis_vid');
   if (!vid) {
     vid = crypto.randomUUID();
@@ -80,7 +79,6 @@ import { NextRequest, NextResponse } from 'next/server';
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY || '');
 const TURNSTILE_SECRET_KEY = process.env.TURNSTILE_SECRET_KEY || '';
 
-// In-memory cache for Rate Limiting
 interface VisitorState {
   requestCount: number;
   lastRequestTime: number;
@@ -95,7 +93,6 @@ export async function POST(req: NextRequest) {
     const userAgent = req.headers.get('user-agent');
     const country = req.headers.get('x-country') || 'Unknown Region';
 
-    // 1. BOT PROTECTION: Block requests without User-Agent
     if (!userAgent || userAgent.includes('bot') || userAgent.includes('curl')) {
       console.warn(\`[SECURITY] Blocked obvious bot: \${ip}\`);
       return NextResponse.json({ error: "Access Denied. Automated requests are prohibited." }, { status: 403 });
@@ -111,7 +108,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Message must be between 1 and 500 characters." }, { status: 400 });
     }
 
-    // 2. TURNSTILE VERIFICATION & SESSION MANAGEMENT
     let isVerified = currentSession === visitorId;
 
     if (!isVerified) {
@@ -119,7 +115,6 @@ export async function POST(req: NextRequest) {
         return NextResponse.json({ error: "Security challenge required.", requiresVerification: true }, { status: 401 });
       }
 
-      // Verify Turnstile with Cloudflare
       const verifyRes = await fetch('https://challenges.cloudflare.com/turnstile/v0/siteverify', {
         method: 'POST',
         headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -134,48 +129,39 @@ export async function POST(req: NextRequest) {
       isVerified = true;
     }
 
-    // 3. RATE LIMITING & SPAM PROTECTION
     const now = Date.now();
     let state = rateLimitMap.get(visitorId) || { requestCount: 0, lastRequestTime: 0, firstRequestTime: now, lastMessage: '' };
 
-    // Daily Reset Logic (24 hours)
     if (now - state.firstRequestTime > 86400000) {
       state.requestCount = 0;
       state.firstRequestTime = now;
     }
 
-    // 15-Second Cooldown
     if (now - state.lastRequestTime < 15000) {
       return NextResponse.json({ error: "Please wait 15 seconds before sending another request." }, { status: 429 });
     }
 
-    // 4 Requests Per Day Limit
     if (state.requestCount >= 4) {
       console.warn(\`[RATE LIMIT] Visitor \${visitorId} exceeded daily limit.\`);
       return NextResponse.json({ error: "You have reached today's AI CFO limit. Please try again tomorrow." }, { status: 429 });
     }
 
-    // Duplicate Message Spam Filter
     if (state.lastMessage.toLowerCase() === userMessage.toLowerCase()) {
       return NextResponse.json({ error: "Duplicate request detected. Please ask a new question." }, { status: 429 });
     }
 
-    // 4. LOGGING (Never log API Keys)
     console.log(\`[AI CFO Request] Time: \${new Date().toISOString()} | ID: \${visitorId.substring(0,8)} | Region: \${country} | Count: \${state.requestCount + 1}/4\`);
 
-    // Update State
     state.requestCount += 1;
     state.lastRequestTime = now;
     state.lastMessage = userMessage;
     rateLimitMap.set(visitorId, state);
 
-    // 5. GEMINI API CALL (Securely on Backend)
-    const model = genAI.getGenerativeModel({ model: "gemini-3.5 flash-lite" }); // Changed back to highly reliable stable model for production
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
     const systemPrompt = \`You are J.A.R.V.I.S, an elite AI Chief Financial Officer for Parvej Alam Ansari. Tone: Professional, authoritative, concise. User Query: \`;
     
-    // Implement Timeout for Gemini Call
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 12000); // 12 second hard timeout
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
 
     const result = await model.generateContent({
       contents: [{ role: 'user', parts: [{ text: systemPrompt + userMessage }] }]
@@ -183,15 +169,13 @@ export async function POST(req: NextRequest) {
     
     clearTimeout(timeoutId);
 
-    // 6. SUCCESS RESPONSE & SET SECURE COOKIE
     const response = NextResponse.json({ text: result.response.text() });
     
-    // Set cookie so user doesn't verify Turnstile again this session
     response.cookies.set('ai_secure_session', visitorId, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
-      maxAge: 86400 // 24 hours
+      maxAge: 86400
     });
 
     return response;
@@ -278,7 +262,7 @@ export default function AICFOPage() {
         throw new Error(data.error || 'Server Error');
       }
 
-      setNeedsVerification(false); // Hide Turnstile on success
+      setNeedsVerification(false);
       setMessages(prev => [...prev, { role: 'ai', text: data.text }]);
       setIsTyping(false);
 
@@ -318,8 +302,8 @@ export default function AICFOPage() {
                <div className="bg-[#050816] border border-white/10 p-4 rounded-xl shadow-2xl text-center">
                  <p className="text-xs font-mono text-white/50 mb-4">Establishing Secure Connection...</p>
                  <Turnstile onVerify={(token) => {
-                    setTurnstileToken(token);
-                    setNeedsVerification(false);
+                   setTurnstileToken(token);
+                   setNeedsVerification(false);
                  }} />
                </div>
              </div>
@@ -344,7 +328,7 @@ export default function AICFOPage() {
               <input
                 type="text"
                 value={input}
-                onChange={(e) => setInput(e.target.value.slice(0, 500))} // Strict 500 Char limit
+                onChange={(e) => setInput(e.target.value.slice(0, 500))}
                 placeholder={isOffline ? "Network connection lost..." : "Ask finance questions..."}
                 disabled={isTyping || isOffline || needsVerification}
                 className="w-full bg-[#0B1120] border border-white/10 rounded-xl pl-5 pr-14 py-4 text-sm text-white outline-none focus:border-accent/50 transition-all disabled:opacity-50"
@@ -499,9 +483,9 @@ async function deploySecurity() {
     const fullPath = path.join(process.cwd(), file.path);
     await fs.mkdir(path.dirname(fullPath), { recursive: true });
     await fs.writeFile(fullPath, file.content, 'utf8');
-    console.log(\`✅ Deployed Enterprise Security: \${file.path}\`);
+    console.log(`✅ Deployed Enterprise Security: ${file.path}`);
   }
-  console.log('\\n🚀 MISSION ACCOMPLISHED: The AI CFO is now secured with Cloudflare Turnstile, Serverless Cookie Validation, and Strict Rate Limiting.');
+  console.log('\n🚀 MISSION ACCOMPLISHED: The AI CFO is now secured with Cloudflare Turnstile, Serverless Cookie Validation, and Strict Rate Limiting.');
 }
 
 deploySecurity();

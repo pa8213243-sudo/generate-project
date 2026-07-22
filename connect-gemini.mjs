@@ -23,8 +23,8 @@ export async function POST(req: NextRequest) {
 
     const { messages } = await req.json();
     
-    // We use gemini-3.5 flash-lite for fast, standard text interactions
-    const model = genAI.getModel({ model: "gemini-3.5 flash-lite" });
+    // We use gemini-3.6-flash for fast, standard text interactions
+    const model = genAI.getModel({ model: "gemini-3.6-flash" });
 
     // Extract the latest user message
     const userMessage = messages[messages.length - 1].text;

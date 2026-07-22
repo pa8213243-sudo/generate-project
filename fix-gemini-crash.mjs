@@ -24,8 +24,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No messages provided." }, { status: 400 });
     }
 
-    // Using gemini-3.5 flash-lite
-    const model = genAI.getModel({ model: "gemini-3.5 flash-lite" });
+    // Using gemini-3.6-flash
+    const model = genAI.getModel({ model: "gemini-3.6-flash" });
 
     // Get the last user message
     const userMessage = messages[messages.length - 1].text;

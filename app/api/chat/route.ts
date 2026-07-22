@@ -14,8 +14,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No messages provided." }, { status: 400 });
     }
 
-    // ✅ FIX: Setting the exact gemini-3.5 flash-lite open-source model supported by Google AI Studio
-    const model = genAI.getGenerativeModel({ model: "gemini-3.5 flash-lite" });
+    // ✅ FIX: Setting the exact gemini-3.6-flash open-source model supported by Google AI Studio
+    const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
 
     const userMessage = messages[messages.length - 1].text;
 
@@ -31,6 +31,6 @@ User Query: `;
 
   } catch (error: any) {
     console.error("API Error:", error);
-    return NextResponse.json({ error: error.message || "Failed to generate AI response from gemini-3.5 flash-lite." }, { status: 500 });
+    return NextResponse.json({ error: error.message || "Failed to generate AI response from gemini-3.6-flash." }, { status: 500 });
   }
 }

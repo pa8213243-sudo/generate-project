@@ -8,11 +8,11 @@ async function fixModelError() {
   try {
     let content = await fs.readFile(filePath, 'utf8');
     
-    // Changing the model to the universally supported 'gemini-3.5 flash-lite'
-    if (content.includes('gemini-3.5 flash-lite')) {
-      content = content.replace(/model:\s*"gemini-3.5 flash-lite"/g, 'model: "gemini-3.5 flash-lite"');
+    // Changing the model to the universally supported 'gemini-3.6-flash'
+    if (content.includes('gemini-3.6-flash')) {
+      content = content.replace(/model:\s*"gemini-3.6-flash"/g, 'model: "gemini-3.6-flash"');
       await fs.writeFile(filePath, content, 'utf8');
-      console.log('\x1b[32m%s\x1b[0m', '✅ SUCCESS: Model safely downgraded to stable "gemini-3.5 flash-lite".');
+      console.log('\x1b[32m%s\x1b[0m', '✅ SUCCESS: Model safely downgraded to stable "gemini-3.6-flash".');
     } else {
       console.log('\x1b[33m%s\x1b[0m', '⚠️ NOTE: Model was already changed or not found.');
     }

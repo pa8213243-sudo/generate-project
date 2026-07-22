@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     }
 
     // ✅ FIX: The correct function is getGenerativeModel (not getModel)
-    const model = genAI.getGenerativeModel({ model: "gemini-3.5 flash-lite" });
+    const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
 
     const userMessage = messages[messages.length - 1].text;
 

@@ -44,9 +44,9 @@ async function smartFix() {
 
     console.log(`✅ Found ${validModels.length} compatible models for your account.`);
 
-    // Prefer gemini-3.5 flash-lite-8b or gemini-3.5 flash-lite if available, otherwise pick the first valid one
+    // Prefer gemini-3.6-flash-8b or gemini-3.6-flash if available, otherwise pick the first valid one
     let selectedModel = validModels[0].name.replace('models/', '');
-    const preferred = validModels.find(m => m.name.includes('gemini-3.5 flash-lite'));
+    const preferred = validModels.find(m => m.name.includes('gemini-3.6-flash'));
     
     if (preferred) {
       selectedModel = preferred.name.replace('models/', '');

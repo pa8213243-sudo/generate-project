@@ -17,8 +17,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No messages provided." }, { status: 400 });
     }
 
-    // ✅ FIX: Setting the exact gemini-3.5 flash-lite open-source model supported by Google AI Studio
-    const model = genAI.getGenerativeModel({ model: "gemini-3.5 flash-lite" });
+    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
 
     const userMessage = messages[messages.length - 1].text;
 
@@ -34,18 +33,18 @@ User Query: \`;
 
   } catch (error: any) {
     console.error("API Error:", error);
-    return NextResponse.json({ error: error.message || "Failed to generate AI response from gemini-3.5 flash-lite." }, { status: 500 });
+    return NextResponse.json({ error: error.message || "Failed to generate AI response from gemini-1.5-flash." }, { status: 500 });
   }
 }`;
 
-async function fixgemini-3.5 flash-liteModel() {
+async function fixGeminiModel() {
   try {
     const targetPath = path.join(process.cwd(), 'app/api/chat/route.ts');
     await fs.writeFile(targetPath, apiRouteCode, 'utf8');
-    console.log('✅ BINGO! Backend successfully updated to exactly use gemini-3.5 flash-lite (gemini-3.5 flash-lite).');
+    console.log('✅ BINGO! Backend successfully updated to use gemini-1.5-flash.');
   } catch (err) {
     console.error('❌ Error updating file:', err);
   }
 }
 
-fixgemini-3.5 flash-liteModel();
+fixGeminiModel();
