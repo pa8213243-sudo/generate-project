@@ -17,13 +17,15 @@ const getCategoryIcon = (category: string) => {
 };
 
 export const ProjectCard = ({ project }: { project: Project }) => {
-  const [imageSrc, setImageSrc] = React.useState(project.coverImage || '/assets/uber.jpeg');
+  // BINGO: Yahan project.coverImage ko project.image kar diya hai
+  const [imageSrc, setImageSrc] = React.useState(project.image || '/assets/uber.jpeg');
   const [imageError, setImageError] = React.useState(false);
 
   React.useEffect(() => {
-    setImageSrc(project.coverImage || '/assets/uber.jpeg');
+    // BINGO: Yahan bhi project.coverImage ko project.image kar diya hai
+    setImageSrc(project.image || '/assets/uber.jpeg');
     setImageError(false);
-  }, [project.coverImage]);
+  }, [project.image]);
 
   const resolvedSrc = imageError ? '/assets/uber.jpeg' : imageSrc;
 
