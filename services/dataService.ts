@@ -596,6 +596,7 @@ export function getTimeline() {
   ];
 }
 export interface Certificate {
+  credentialId?: string;
   id: string;
   title: string;
   issuer: string;
