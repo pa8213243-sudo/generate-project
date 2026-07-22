@@ -237,7 +237,7 @@ export function getProjects(): Project[] {
     // 5. INCREDIBLE INDIA
     // ---------------------------------------------------------
     {
-      id: "incredible-india",
+      id: "india_ppt.jpeg.png",
       title: "Incredible India Tourism Strategy",
       description: "Macro-economic analysis of the Indian tourism sector's growth trajectory.",
       category: "PowerPoint",
@@ -544,7 +544,7 @@ export function getProjects(): Project[] {
     // 12. QA RAMCO FINANCIAL
     // ---------------------------------------------------------
     {
-      id: "qa-ramco",
+      id: "/QA_aramco_dasboard.jpeg",
       title: "QA Ramco Financial Dashboard",
       description: "Created financial KPI dashboard for revenue monitoring, collections and operational performance.",
       category: "Power BI",

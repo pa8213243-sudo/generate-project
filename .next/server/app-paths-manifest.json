@@ -1,17 +1,3 @@
 {
-  "/_not-found/page": "app/_not-found/page.js",
-  "/ai-cfo/page": "app/ai-cfo/page.js",
-  "/achievements/page": "app/achievements/page.js",
-  "/api/chat/route": "app/api/chat/route.js",
-  "/company-explorer/page": "app/company-explorer/page.js",
-  "/contact/page": "app/contact/page.js",
-  "/financial-models/page": "app/financial-models/page.js",
-  "/certificates/page": "app/certificates/page.js",
-  "/projects/[id]/page": "app/projects/[id]/page.js",
-  "/market/page": "app/market/page.js",
-  "/page": "app/page.js",
-  "/projects/page": "app/projects/page.js",
-  "/resume/page": "app/resume/page.js",
-  "/timeline/page": "app/timeline/page.js",
-  "/why-hire-me/page": "app/why-hire-me/page.js"
+  "/projects/page": "app/projects/page.js"
 }
