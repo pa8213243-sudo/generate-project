@@ -29,8 +29,8 @@ export async function POST(req: Request) {
 
     const genAI = new GoogleGenerativeAI(apiKey);
     
-    // Using 'gemini-3.6-flash' which is universally available on all free Google AI Studio tiers
-    const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
+    // Using 'gemini-3.5 flash-lite' which is universally available on all free Google AI Studio tiers
+    const model = genAI.getGenerativeModel({ model: "gemini-3.5 flash-lite" });
     
     const result = await model.generateContent(\`\${SYSTEM_PROMPT}\\n\\nUser: \${message}\\nAI CFO:\`);
     const response = await result.response;
@@ -49,7 +49,7 @@ async function runFix() {
   const filePath = path.join(process.cwd(), 'app', 'api', 'chat', 'route.ts');
   try {
     await fs.writeFile(filePath, newRouteContent, 'utf8');
-    console.log('✅ Successfully updated app/api/chat/route.ts to use "gemini-3.6-flash".');
+    console.log('✅ Successfully updated app/api/chat/route.ts to use "gemini-3.5 flash-lite".');
     console.log('\n➡️ NOW DO THIS:');
     console.log('1. Go to your terminal and stop the dev server (Press Ctrl + C).');
     console.log('2. Run: npm run dev');

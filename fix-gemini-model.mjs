@@ -17,8 +17,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No messages provided." }, { status: 400 });
     }
 
-    // ✅ FIX: Changed model to 'gemini-3.6-flash' which is universally supported and 100% stable
-    const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
+    // ✅ FIX: Changed model to 'gemini-3.5 flash-lite' which is universally supported and 100% stable
+    const model = genAI.getGenerativeModel({ model: "gemini-3.5 flash-lite" });
 
     const userMessage = messages[messages.length - 1].text;
 
@@ -42,7 +42,7 @@ async function fixApiModel() {
   try {
     const targetPath = path.join(process.cwd(), 'app/api/chat/route.ts');
     await fs.writeFile(targetPath, apiRouteCode, 'utf8');
-    console.log('✅ BINGO! Model safely changed to gemini-3.6-flash.');
+    console.log('✅ BINGO! Model safely changed to gemini-3.5 flash-lite.');
   } catch (err) {
     console.error('❌ Error updating file:', err);
   }

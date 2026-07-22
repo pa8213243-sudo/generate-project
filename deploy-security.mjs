@@ -170,7 +170,7 @@ export async function POST(req: NextRequest) {
     rateLimitMap.set(visitorId, state);
 
     // 5. GEMINI API CALL (Securely on Backend)
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" }); // Changed back to highly reliable stable model for production
+    const model = genAI.getGenerativeModel({ model: "gemini-3.5 flash-lite" }); // Changed back to highly reliable stable model for production
     const systemPrompt = \`You are J.A.R.V.I.S, an elite AI Chief Financial Officer for Parvej Alam Ansari. Tone: Professional, authoritative, concise. User Query: \`;
     
     // Implement Timeout for Gemini Call

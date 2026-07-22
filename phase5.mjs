@@ -29,7 +29,7 @@ export async function POST(req: Request) {
 
   try {
     const { message } = await req.json();
-    const model = genAI.getGenerativeModel({ model: "gemini-3.6-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-3.5 flash-lite" });
     const result = await model.generateContent(\`\${SYSTEM_PROMPT}\\n\\nUser: \${message}\\nAI CFO:\`);
     const response = await result.response;
     const text = response.text();
