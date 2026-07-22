@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST="{}"
+self.__REACT_LOADABLE_MANIFEST='{"components\\\\dashboard\\\\GlobeWidget.tsx -> react-globe.gl":{"id":9521,"files":["static/chunks/b055d1fb.1063c3499e329804.js","static/chunks/b536a0f1.05d9fe6e7b397809.js","static/chunks/5e094596.7ab14f1f8b5b3e58.js","static/chunks/8ffc485e.b7dc3d5c5e339d0e.js","static/chunks/60.a3323ebae6332116.js"]}}';

@@ -1,6 +1,7 @@
 import { getProjects } from '@/services/dataService';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ArrowLeft, ExternalLink, Briefcase, Database, LayoutTemplate, Lightbulb, Target, TrendingUp, Code2, GraduationCap, ArrowRight } from 'lucide-react';
 
 export default function ProjectDetail({ params }: { params: { id: string } }) {
@@ -26,10 +27,15 @@ export default function ProjectDetail({ params }: { params: { id: string } }) {
 
       {/* Hero Header & Thumbnail */}
       <div className="space-y-6">
-        <div className="w-full aspect-[21/9] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black">
-          {/* Ensure the image scales properly */}
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={project.image} alt={project.title} className="w-full h-full object-cover opacity-90 hover:opacity-100 transition-opacity" />
+        <div className="w-full aspect-[21/9] rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black relative">
+          <Image 
+            src={project.image} 
+            alt={project.title} 
+            fill
+            priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 100vw, 100vw"
+            className="object-cover opacity-90 hover:opacity-100 transition-opacity" 
+          />
         </div>
         
         <div>

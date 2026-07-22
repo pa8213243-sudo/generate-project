@@ -6,7 +6,7 @@ import Link from 'next/link';
 export const EmbeddedAICFO = () => {
   const [input, setInput] = useState('');
   const [messages, setMessages] = useState([
-    { role: 'ai', text: "J.A.R.V.I.S: Hi Parvej! Secure link established. I'm ready to analyze financial queries." }
+    { role: 'ai', text: "J.A.R.V.I.S: Hi Parvej! Secure link established. I&apos;m ready to analyze financial queries." }
   ]);
   const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
