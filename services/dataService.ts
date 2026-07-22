@@ -596,17 +596,19 @@ export function getTimeline() {
   ];
 }
 export interface Certificate {
-  credentialId?: string;
   id: string;
   title: string;
   issuer: string;
   date: string;
   category: string;
+  credentialId?: string;
   credentialUrl?: string;
   verificationUrl?: string;
   image?: string;
   badgeImage?: string;
   certificateImage?: string;
+  skills?: string[];
+  description?: string;
 }
 
 export function getCertificates(): Certificate[] {
