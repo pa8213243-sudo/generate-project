@@ -1,65 +1,81 @@
-import { GoogleGenerativeAI } from '@google/generative-ai';
-import { NextRequest, NextResponse } from 'next/server';
+"use client";
+import React, { useState } from 'react';
+import { EmbeddedAICFO } from '@/components/dashboard/EmbeddedAICFO';
+import { Bot, Sparkles, ShieldCheck, Cpu, Database } from 'lucide-react';
 
-// Environment Variable se Key uthayega (Netlify Dashboard se)
-const apiKey = process.env.GEMINI_API_KEY || '';
-const genAI = new GoogleGenerativeAI(apiKey);
+export default function AICFOPage() {
+  return (
+    <div className="w-full p-6 space-y-6 max-w-[1600px] mx-auto min-h-screen">
+      
+      {/* Top Header */}
+      <div className="w-full bg-[#0B1120] border border-white/10 rounded-2xl p-6 shadow-xl flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <div className="flex items-center gap-2 text-cyan-400 font-mono text-xs mb-1">
+            <Sparkles className="w-4 h-4 animate-pulse" /> J.A.R.V.I.S. Omni-Lingual Engine
+          </div>
+          <h1 className="text-3xl font-black font-space text-white">AI CFO STRATEGIC CENTER</h1>
+          <p className="text-xs text-white/60 font-sans mt-1">
+            Advanced Quantitative Intelligence & Corporate Finance Analysis
+          </p>
+        </div>
 
-export async function POST(req: NextRequest) {
-  try {
-    if (!apiKey) {
-      return NextResponse.json(
-        { error: "API Key missing in environment variables" },
-        { status: 500 }
-      );
-    }
+        <div className="flex items-center gap-3">
+          <div className="bg-white/5 border border-white/10 px-4 py-2 rounded-xl flex items-center gap-2">
+            <ShieldCheck className="w-4 h-4 text-emerald-400" />
+            <div className="text-left">
+              <div className="text-[9px] font-mono text-white/40 uppercase">Security</div>
+              <div className="text-xs font-bold text-white">Enterprise Grade</div>
+            </div>
+          </div>
+          <div className="bg-white/5 border border-white/10 px-4 py-2 rounded-xl flex items-center gap-2">
+            <Cpu className="w-4 h-4 text-cyan-400" />
+            <div className="text-left">
+              <div className="text-[9px] font-mono text-white/40 uppercase">Latency</div>
+              <div className="text-xs font-bold text-white">&lt; 300ms</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-    const { messages } = await req.json();
-    if (!messages || messages.length === 0) {
-      return NextResponse.json(
-        { error: "No messages provided." },
-        { status: 400 }
-      );
-    }
+      {/* Main Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 items-stretch">
+        
+        {/* Left Info Panel */}
+        <div className="lg:col-span-1 space-y-6">
+          <div className="rounded-2xl bg-[#0B1120] border border-white/10 p-6 shadow-xl">
+            <h3 className="text-xs font-space font-bold text-white tracking-widest uppercase mb-4 flex items-center gap-2">
+              <Database className="w-4 h-4 text-cyan-400" /> Executive Capabilities
+            </h3>
+            <ul className="space-y-3 text-xs text-white/70 font-sans">
+              <li className="flex items-start gap-2">
+                <span className="text-cyan-400 font-bold">•</span>
+                <span><strong>Multi-Lingual Processing:</strong> Evaluates queries in any language seamlessly.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-cyan-400 font-bold">•</span>
+                <span><strong>FP&A Modeling:</strong> Capital structure, cash flow optimization, and valuation analysis.</span>
+              </li>
+              <li className="flex items-start gap-2">
+                <span className="text-cyan-400 font-bold">•</span>
+                <span><strong>Clean Formatting:</strong> Quantitative outputs formatted with precision numbers and bullet points.</span>
+              </li>
+            </ul>
+          </div>
 
-    // Sahi Model Name: gemini-1.5-flash
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    const userMessage = messages[messages.length - 1].text;
+          <div className="rounded-2xl bg-gradient-to-br from-blue-900/30 via-[#0B1120] to-[#0B1120] border border-cyan-500/20 p-6 shadow-xl">
+            <div className="text-cyan-400 text-xs font-mono mb-2">SYSTEM ARCHITECTURE</div>
+            <p className="text-xs text-white/80 leading-relaxed font-sans">
+              Built exclusively for Parvej Alam Ansari&apos;s Finance Command Center using state-of-the-art Generative AI models.
+            </p>
+          </div>
+        </div>
 
-    const systemPrompt = `You are J.A.R.V.I.S., an elite AI Chief Financial Officer (CFO) for Parvej Alam Ansari's Finance Command Center.
+        {/* Embedded Interactive AI CFO Chat Widget */}
+        <div className="lg:col-span-2 min-h-[500px]">
+          <EmbeddedAICFO />
+        </div>
 
-STRICT RESPONSE RULES:
-1. LANGUAGE MATCHING: Automatically detect the exact input language used by the user (English, Hindi, Hinglish, Arabic, Spanish, French, German, Japanese, etc.) and respond in that EXACT same language.
-2. NO MARKDOWN ASTERISKS: NEVER use double asterisks (**) or single asterisks (*) for formatting. Do NOT bold or italicize text using asterisks under any circumstances.
-3. BULLET FORMATTING: For lists and key takeaways, use only numbers (1., 2., 3.), dashes (-), or dots (•).
-4. PERSONA: Smart, authoritative, highly intelligent, concise, and helpful. Treat Parvej as the Founder & Chief Architect.
-`;
-
-    const chat = model.startChat({
-      history: [
-        {
-          role: 'user',
-          parts: [{ text: "Initialize system instructions." }],
-        },
-        {
-          role: 'model',
-          parts: [{ text: "Instructions accepted. Systems fully operational across all global languages without asterisks." }],
-        },
-      ],
-    });
-
-    const result = await chat.sendMessage(`${systemPrompt}\n\nUser Question: ${userMessage}`);
-    let responseText = result.response.text();
-
-    // Extra safety cleanup to strip any leftover asterisks
-    responseText = responseText.replace(/\*\*/g, '').replace(/\*/g, '•');
-
-    return NextResponse.json({ reply: responseText });
-  } catch (error: any) {
-    console.error("Gemini API Error:", error);
-    return NextResponse.json(
-      { error: error.message || "Failed to process query" },
-      { status: 500 }
-    );
-  }
+      </div>
+    </div>
+  );
 }
