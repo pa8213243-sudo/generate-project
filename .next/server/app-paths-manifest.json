@@ -1,5 +1,3 @@
 {
-  "/company-explorer/page": "app/company-explorer/page.js",
-  "/page": "app/page.js",
-  "/market/page": "app/market/page.js"
+  "/page": "app/page.js"
 }
