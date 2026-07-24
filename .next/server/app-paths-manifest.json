@@ -1,3 +1,4 @@
 {
+  "/ai-cfo/page": "app/ai-cfo/page.js",
   "/page": "app/page.js"
 }

@@ -9,6 +9,7 @@ import Link from 'next/link';
 
 export default function CommandDashboard() {
   const [devMode, setDevMode] = useState(false);
+  const [activeTab, setActiveTab] = useState('7D');
 
   return (
     <div className={`w-full p-6 space-y-6 max-w-[1600px] mx-auto ${devMode ? 'border border-dashed border-accent/50' : ''}`}>
@@ -44,11 +45,18 @@ export default function CommandDashboard() {
               <p className="text-[10px] font-mono text-white/40 uppercase tracking-widest mb-1">WELCOME BACK,</p>
               <h1 className="text-4xl font-black font-space text-white mb-2 flex items-center gap-2">PARVEJ <span className="text-primary"><CheckCircle2 className="w-6 h-6"/></span></h1>
               <p className="text-xs text-white/60 font-sans mb-8 leading-relaxed">FP&A Professional | CMA US Candidate.<br/>Building Financial Intelligence for a Smarter World.</p>
+              
+              {/* 3D Tagde Buttons Added Here */}
               <div className="flex gap-4">
-                <Link href="/projects" className="px-5 py-2.5 bg-primary text-white rounded-xl text-xs font-bold shadow-[0_4px_20px_rgba(59,130,246,0.4)] hover:bg-blue-500 transition-colors">Explore Dashboard →</Link>
-                <Link href="/resume" className="px-5 py-2.5 bg-white/5 border border-white/10 text-white rounded-xl text-xs font-bold hover:bg-white/10 transition-colors">View My Work</Link>
+                <Link href="/projects" className="px-5 py-2.5 bg-blue-600 text-white rounded-xl text-xs font-bold transition-all cursor-pointer border border-blue-400 shadow-[0_4px_0_#1e3a8a,0_4px_10px_rgba(37,99,235,0.4)] active:translate-y-1 active:shadow-none hover:bg-blue-500">
+                  Explore Dashboard →
+                </Link>
+                <Link href="/resume" className="px-5 py-2.5 bg-slate-800 text-white/90 rounded-xl text-xs font-bold transition-all cursor-pointer border border-slate-600 shadow-[0_4px_0_#0f172a,0_4px_10px_rgba(0,0,0,0.5)] active:translate-y-1 active:shadow-none hover:bg-slate-700">
+                  View My Work
+                </Link>
               </div>
             </div>
+
             <div className="grid grid-cols-4 gap-2 mt-auto pt-5 border-t border-white/10 text-center">
               <div><div className="text-lg font-space font-bold text-white">0+</div><div className="text-[9px] font-mono text-white/40 uppercase mt-1">Work Exp.</div></div>
               <div><div className="text-lg font-space font-bold text-white">15+</div><div className="text-[9px] font-mono text-white/40 uppercase mt-1">Projects</div></div>
@@ -57,211 +65,52 @@ export default function CommandDashboard() {
             </div>
           </div>
 
-          {/* 📊 ORGANIC 9-LAYER FINANCIAL HEATMAP */}
+          {/* 📊 PROFESSIONAL FINANCIAL-GRADE THERMAL HEATMAP */}
           <div className="flex-1 rounded-2xl bg-[#0B1120] border border-white/10 p-6 flex flex-col justify-between shadow-xl min-h-[300px] relative overflow-hidden">
-            
-            {/* Top Header */}
-            <div className="flex justify-between items-start z-20">
-              <div>
-                <h3 className="text-xs font-space font-bold text-white tracking-widest uppercase mb-1">GLOBAL MARKET HEATMAP</h3>
-                <p className="text-[10px] text-white/40">Real-time | Interactive | Financial Grade</p>
-              </div>
-              <div className="bg-white/5 border border-white/10 px-2 py-1 rounded text-[9px] font-mono text-white/60 font-bold">
-                7D ▼
+            <div className="absolute top-4 right-4 z-30 flex items-center gap-1 bg-white/5 border border-white/10 p-1 rounded-lg">
+               {['1D', '7D', '1M'].map((t) => (
+                 <button 
+                   key={t} 
+                   onClick={() => setActiveTab(t)}
+                   className={`px-2 py-0.5 rounded text-[9px] font-mono font-bold transition-colors ${activeTab === t ? 'bg-primary text-white' : 'text-white/60 hover:text-white'}`}
+                 >
+                   {t}
+                 </button>
+               ))}
+            </div>
+            <div>
+              <h3 className="text-xs font-space font-bold text-white tracking-widest uppercase mb-1">GLOBAL MARKET HEATMAP</h3>
+              <p className="text-[10px] text-white/40 mb-4">Real-time | Thermal Density | Financial Grade</p>
+              
+              <div className="w-full h-48 relative flex items-center justify-center rounded-xl overflow-hidden bg-[#030712] border border-white/10">
+                
+                {/* 1. World Map Base Image */}
+                <div className="absolute inset-0 w-full h-full flex items-center justify-center opacity-40 mix-blend-luminosity filter contrast-200">
+                  <img 
+                    src="/assets/earth_bump.jpg" 
+                    alt="World Map" 
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+
+                {/* 2. Professional Seamless Thermal Heat Glows */}
+                <div className="absolute inset-0 z-10 pointer-events-none mix-blend-screen">
+                  <div className="absolute top-[20%] left-[15%] w-36 h-28 bg-emerald-500/40 rounded-full blur-2xl animate-pulse"></div>
+                  <div className="absolute top-[18%] left-[46%] w-24 h-24 bg-amber-500/35 rounded-full blur-2xl"></div>
+                  <div className="absolute top-[35%] left-[58%] w-32 h-28 bg-emerald-400/50 rounded-full blur-2xl animate-pulse" style={{ animationDuration: '3s' }}></div>
+                  <div className="absolute top-[25%] left-[72%] w-40 h-32 bg-emerald-500/45 rounded-full blur-2xl"></div>
+                  <div className="absolute top-[55%] left-[28%] w-28 h-28 bg-blue-600/40 rounded-full blur-2xl"></div>
+                </div>
+
+                {/* Heatmap Legend */}
+                <div className="absolute bottom-2 left-2 z-20 flex flex-col items-center bg-[#0B1120]/90 backdrop-blur-md p-1.5 rounded-lg border border-white/15 shadow-xl">
+                  <span className="text-[8px] font-mono text-emerald-400 font-bold">High</span>
+                  <div className="w-1.5 h-10 bg-gradient-to-b from-emerald-400 via-amber-400 to-blue-500 rounded-full my-1 shadow-[0_0_8px_rgba(16,185,129,0.5)]"></div>
+                  <span className="text-[8px] font-mono text-blue-400 font-bold">Low</span>
+                </div>
               </div>
             </div>
-
-            {/* Heatmap Container */}
-            <div className="w-full h-48 relative flex items-center justify-center rounded-xl overflow-hidden bg-[#030712] border border-white/10 my-auto">
-
-              {/* LAYER 1: Dark ocean base */}
-              <div className="absolute inset-0 bg-gradient-to-b from-[#020509] via-[#030a16] to-[#020509]" />
-
-              {/* LAYER 2: High-res world map, ~70% opacity, coastlines preserved */}
-              <div className="absolute inset-0 w-full h-full">
-                <img
-                  src="/assets/earth_bump.jpg"
-                  alt="World Map"
-                  className="w-full h-full object-cover opacity-70 saturate-0 brightness-[0.45] contrast-[1.35]"
-                />
-              </div>
-              <div className="absolute inset-0 bg-[#04091a]/40 mix-blend-multiply" />
-
-              {/* LAYERS 3–9: SVG thermal density system */}
-              <svg
-                viewBox="0 0 700 400"
-                preserveAspectRatio="xMidYMid slice"
-                className="absolute inset-0 w-full h-full heatmap-breathe"
-                style={{ mixBlendMode: 'screen' }}
-              >
-                <defs>
-                  {/* Organic distortion filters */}
-                  <filter id="organicL" x="-100%" y="-100%" width="300%" height="300%">
-                    <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="4" result="n" />
-                    <feDisplacementMap in="SourceGraphic" in2="n" scale="26" />
-                    <feGaussianBlur stdDeviation="20" />
-                  </filter>
-                  <filter id="organicM" x="-100%" y="-100%" width="300%" height="300%">
-                    <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="9" result="n" />
-                    <feDisplacementMap in="SourceGraphic" in2="n" scale="14" />
-                    <feGaussianBlur stdDeviation="9" />
-                  </filter>
-                  <filter id="organicS" x="-100%" y="-100%" width="300%" height="300%">
-                    <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="15" result="n" />
-                    <feDisplacementMap in="SourceGraphic" in2="n" scale="7" />
-                    <feGaussianBlur stdDeviation="4" />
-                  </filter>
-
-                  {/* Fine noise texture */}
-                  <filter id="grain">
-                    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" result="n" />
-                    <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.018 0" />
-                  </filter>
-
-                  {/* Institutional blue-green color ramps */}
-                  <radialGradient id="cMax" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%"  stopColor="#6ee7b7" stopOpacity="0.95" />
-                    <stop offset="55%" stopColor="#34d399" stopOpacity="0.5" />
-                    <stop offset="100%" stopColor="#34d399" stopOpacity="0" />
-                  </radialGradient>
-                  <radialGradient id="cHigh" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%"  stopColor="#34d399" stopOpacity="0.8" />
-                    <stop offset="60%" stopColor="#10b981" stopOpacity="0.35" />
-                    <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
-                  </radialGradient>
-                  <radialGradient id="cMed" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%"  stopColor="#10b981" stopOpacity="0.5" />
-                    <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0" />
-                  </radialGradient>
-                  <radialGradient id="cLow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%"  stopColor="#22d3ee" stopOpacity="0.3" />
-                    <stop offset="100%" stopColor="#22d3ee" stopOpacity="0" />
-                  </radialGradient>
-
-                  {/* Ambient ocean + edge lighting */}
-                  <radialGradient id="oceanGlow" cx="50%" cy="45%" r="75%">
-                    <stop offset="0%"  stopColor="#0ea5e9" stopOpacity="0.09" />
-                    <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0" />
-                  </radialGradient>
-                </defs>
-
-                {/* LAYER 3: Large regional gradient washes */}
-                <g filter="url(#organicL)">
-                  <ellipse cx="145" cy="128" rx="68" ry="40" fill="url(#cHigh)" transform="rotate(-10 145 128)" />
-                  <ellipse cx="335" cy="97"  rx="42" ry="24" fill="url(#cMed)"  transform="rotate(6 335 97)" />
-                  <ellipse cx="460" cy="163" rx="36" ry="25" fill="url(#cMax)"  transform="rotate(-8 460 163)" />
-                  <ellipse cx="530" cy="112" rx="40" ry="27" fill="url(#cHigh)" transform="rotate(10 530 112)" />
-                  <ellipse cx="228" cy="230" rx="28" ry="21" fill="url(#cLow)"  opacity="0.8" />
-                  <ellipse cx="420" cy="155" rx="30" ry="18" fill="url(#cHigh)" opacity="0.75" />
-                </g>
-
-                {/* LAYER 4: Medium city-cluster gradients */}
-                <g filter="url(#organicM)">
-                  {/* North America */}
-                  <ellipse cx="118" cy="150" rx="18" ry="13" fill="url(#cMax)" />
-                  <ellipse cx="152" cy="168" rx="16" ry="11" fill="url(#cHigh)" />
-                  <ellipse cx="155" cy="128" rx="15" ry="10" fill="url(#cMax)" />
-                  <ellipse cx="176" cy="123" rx="16" ry="11" fill="url(#cMax)" />
-                  <ellipse cx="168" cy="112" rx="12" ry="8"  fill="url(#cMed)" />
-                  <ellipse cx="108" cy="100" rx="11" ry="8"  fill="url(#cMed)" />
-
-                  {/* Europe */}
-                  <ellipse cx="318" cy="93"  rx="11" ry="8" fill="url(#cHigh)" />
-                  <ellipse cx="327" cy="103" rx="12" ry="8" fill="url(#cHigh)" />
-                  <ellipse cx="341" cy="93"  rx="12" ry="8" fill="url(#cHigh)" />
-                  <ellipse cx="333" cy="88"  rx="7"  ry="5" fill="url(#cMed)" />
-                  <ellipse cx="338" cy="104" rx="8"  ry="6" fill="url(#cMed)" />
-                  <ellipse cx="346" cy="114" rx="10" ry="7" fill="url(#cMed)" />
-                  <ellipse cx="345" cy="72"  rx="13" ry="9" fill="url(#cMed)" opacity="0.8" />
-                  <ellipse cx="368" cy="98"  rx="15" ry="10" fill="url(#cLow)" />
-
-                  {/* Middle East (MENA / UAE target) */}
-                  <ellipse cx="431" cy="154" rx="14" ry="9" fill="url(#cHigh)" />
-                  <ellipse cx="416" cy="160" rx="15" ry="10" fill="url(#cMed)" />
-                  <ellipse cx="426" cy="157" rx="7"  ry="5" fill="url(#cHigh)" />
-                  <ellipse cx="418" cy="150" rx="6"  ry="4" fill="url(#cMed)" />
-                  <ellipse cx="406" cy="144" rx="7"  ry="5" fill="url(#cMed)" />
-
-                  {/* India */}
-                  <ellipse cx="456" cy="166" rx="11" ry="8" fill="url(#cMax)" />
-                  <ellipse cx="461" cy="146" rx="12" ry="8" fill="url(#cMax)" />
-                  <ellipse cx="463" cy="181" rx="10" ry="7" fill="url(#cHigh)" />
-                  <ellipse cx="466" cy="173" rx="9"  ry="6" fill="url(#cHigh)" />
-                  <ellipse cx="469" cy="183" rx="9"  ry="6" fill="url(#cHigh)" />
-                  <ellipse cx="457" cy="169" rx="7"  ry="5" fill="url(#cHigh)" />
-
-                  {/* China / APAC */}
-                  <ellipse cx="524" cy="106" rx="12" ry="8" fill="url(#cMax)" />
-                  <ellipse cx="541" cy="121" rx="12" ry="8" fill="url(#cMax)" />
-                  <ellipse cx="525" cy="141" rx="8"  ry="6" fill="url(#cHigh)" />
-                  <ellipse cx="541" cy="141" rx="7"  ry="5" fill="url(#cMed)" />
-                  <ellipse cx="551" cy="106" rx="9"  ry="6" fill="url(#cMed)" />
-                  <ellipse cx="566" cy="106" rx="11" ry="7" fill="url(#cMed)" />
-
-                  {/* Australia */}
-                  <ellipse cx="592" cy="272" rx="15" ry="10" fill="url(#cMed)" />
-                  <ellipse cx="597" cy="278" rx="8"  ry="6" fill="url(#cMed)" opacity="0.7" />
-
-                  {/* South America */}
-                  <ellipse cx="222" cy="218" rx="12" ry="9" fill="url(#cMed)" />
-                  <ellipse cx="212" cy="255" rx="8"  ry="6" fill="url(#cLow)" />
-                  <ellipse cx="202" cy="250" rx="5"  ry="4" fill="url(#cLow)" opacity="0.6" />
-
-                  {/* Africa */}
-                  <ellipse cx="369" cy="288" rx="9" ry="7" fill="url(#cLow)" opacity="0.5" />
-                  <ellipse cx="390" cy="150" rx="7" ry="5" fill="url(#cLow)" opacity="0.45" />
-                </g>
-
-                {/* LAYER 5: Small precise financial hotspots */}
-                <g filter="url(#organicS)">
-                  <ellipse cx="122" cy="152" rx="6" ry="4" fill="url(#cMax)"  opacity="0.85" />
-                  <ellipse cx="150" cy="170" rx="5" ry="4" fill="url(#cHigh)" opacity="0.8" />
-                  <ellipse cx="459" cy="164" rx="5" ry="4" fill="url(#cMax)"  opacity="0.9" />
-                  <ellipse cx="501" cy="190" rx="6" ry="5" fill="url(#cHigh)" opacity="0.9" />
-                  <ellipse cx="533" cy="115" rx="5" ry="4" fill="url(#cMax)"  opacity="0.8" />
-                  <ellipse cx="431" cy="154" rx="4" ry="3" fill="url(#cHigh)" opacity="0.85" />
-                </g>
-
-                {/* LAYER 6: Soft bloom pass */}
-                <g filter="url(#organicL)" opacity="0.22">
-                  <ellipse cx="460" cy="163" rx="48" ry="32" fill="url(#cMax)" />
-                  <ellipse cx="140" cy="130" rx="58" ry="36" fill="url(#cHigh)" />
-                  <ellipse cx="530" cy="112" rx="44" ry="30" fill="url(#cHigh)" />
-                </g>
-
-                {/* LAYER 8: Atmospheric ocean lighting */}
-                <ellipse cx="350" cy="190" rx="360" ry="220" fill="url(#oceanGlow)" />
-
-                {/* LAYER 7: Fine noise texture */}
-                <rect width="700" height="400" filter="url(#grain)" opacity="0.5" />
-              </svg>
-
-              {/* Edge illumination */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{ boxShadow: 'inset 0 0 36px 5px rgba(34,211,238,0.05)' }}
-              />
-
-              {/* LAYER 9: Edge vignette for 3D depth */}
-              <div
-                className="absolute inset-0 pointer-events-none"
-                style={{
-                  background: 'radial-gradient(ellipse at center, transparent 55%, rgba(2,5,16,0.55) 100%)',
-                }}
-              />
-
-              {/* Legend */}
-              <div className="absolute bottom-2 left-2 z-20 flex flex-col items-center bg-[#0B1120]/70 backdrop-blur-md px-2 py-1.5 rounded-lg border border-white/10 shadow-lg">
-                <span className="text-[8px] font-mono text-emerald-400 font-bold">High</span>
-                <div className="w-1 h-8 bg-gradient-to-b from-emerald-400 to-blue-500 rounded-full my-1" />
-                <span className="text-[8px] font-mono text-blue-400 font-bold">Low</span>
-              </div>
-            </div>
-
-            {/* Footer Link */}
-            <Link href="/market" className="text-xs font-mono text-accent hover:text-white flex items-center gap-1 transition-colors w-fit ml-auto z-20">
-              Explore Global Market →
-            </Link>
+            <Link href="/market" className="mt-4 text-xs font-mono text-accent hover:text-white flex items-center gap-1 transition-colors w-fit ml-auto z-20">Explore Global Market →</Link>
           </div>
         </div>
 

@@ -1,95 +1,144 @@
 "use client";
-import React, { useState, useRef, useEffect } from 'react';
-import { Bot, Send, Sparkles } from 'lucide-react';
-import Link from 'next/link';
+import React, { useState } from 'react';
+import { Send, Bot, User, Sparkles } from 'lucide-react';
 
-export const EmbeddedAICFO = () => {
-  const [input, setInput] = useState('');
-  const [messages, setMessages] = useState([
-    { role: 'ai', text: "J.A.R.V.I.S: Hi Parvej! Secure link established. I&apos;m ready to analyze financial queries." }
+interface Message {
+  id: string;
+  sender: 'ai' | 'user';
+  text: string;
+}
+
+export function EmbeddedAICFO() {
+  const [messages, setMessages] = useState<Message[]>([
+    {
+      id: '1',
+      sender: 'ai',
+      text: "Global Financial Intelligence initialized. Ask me anything in any language - I will analyze and respond in the exact same language.",
+    },
   ]);
-  const [isTyping, setIsTyping] = useState(false);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const [input, setInput] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const scrollToBottom = () => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  };
+  const handleSend = async () => {
+    if (!input.trim() || loading) return;
 
-  useEffect(() => {
-    scrollToBottom();
-  }, [messages, isTyping]);
-
-  const handleSend = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!input.trim() || isTyping) return;
-    
     const userText = input;
+    const userMsg: Message = {
+      id: Date.now().toString(),
+      sender: 'user',
+      text: userText,
+    };
+
+    setMessages((prev) => [...prev, userMsg]);
     setInput('');
-    const newMessages = [...messages, { role: 'user', text: userText }];
-    setMessages(newMessages);
-    setIsTyping(true);
+    setLoading(true);
 
     try {
-      const response = await fetch('/api/chat', {
+      // Calling your safe backend Gemini API route
+      const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ messages: newMessages }),
+        body: JSON.stringify({ messages: [...messages, userMsg] }),
       });
 
-      const data = await response.json();
+      const data = await res.json();
 
-      if (!response.ok) throw new Error(data.error || 'API response was not ok');
-
-      setMessages(prev => [...prev, { role: 'ai', text: data.text }]);
-      setIsTyping(false); 
-
-    } catch (error: any) {
-      setMessages(prev => [...prev, { role: 'ai', text: `Connection error: ${error.message}` }]);
-      setIsTyping(false);
+      if (res.ok && data.reply) {
+        setMessages((prev) => [
+          ...prev,
+          { id: (Date.now() + 1).toString(), sender: 'ai', text: data.reply },
+        ]);
+      } else {
+        throw new Error(data.error || "Failed to get AI response");
+      }
+    } catch {
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: (Date.now() + 1).toString(),
+          sender: 'ai',
+          text: "System Note: Please check your GEMINI_API_KEY in .env.local file. Network endpoint re-syncing.",
+        },
+      ]);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="rounded-2xl bg-[#0B1120] border border-white/10 p-5 shadow-xl flex flex-col h-full relative overflow-hidden min-h-[240px]">
-      <div className="flex items-center justify-between mb-4 relative z-10">
-        <h3 className="text-xs font-space font-bold text-white tracking-widest uppercase flex items-center gap-2">
-          <Bot className="w-4 h-4 text-accent" /> AI CFO ASSISTANT
-        </h3>
-        <Link href="/ai-cfo" className="text-[9px] font-mono bg-accent/10 text-accent border border-accent/20 px-2 py-1 rounded-md flex items-center gap-1 hover:bg-accent hover:text-black transition-all">
-          <Sparkles className="w-3 h-3" /> Live
-        </Link>
+    <div className="rounded-2xl bg-[#0B1120] border border-white/10 p-5 flex flex-col justify-between shadow-xl h-full min-h-[300px]">
+      {/* Header */}
+      <div className="flex items-center justify-between pb-3 border-b border-white/10">
+        <div className="flex items-center gap-2">
+          <div className="w-7 h-7 rounded-lg bg-cyan-500/20 border border-cyan-400/40 flex items-center justify-center text-cyan-300">
+            <Bot className="w-4 h-4" />
+          </div>
+          <div>
+            <h3 className="text-xs font-space font-bold text-white tracking-widest uppercase">AI CFO ASSISTANT</h3>
+            <p className="text-[9px] text-white/40">Secure Gemini AI Engine</p>
+          </div>
+        </div>
+        <span className="flex items-center gap-1 text-[9px] font-mono text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+          <Sparkles className="w-2.5 h-2.5 animate-pulse" /> Omni-Lingual
+        </span>
       </div>
 
-      <div className="flex-1 overflow-y-auto mb-4 space-y-3 custom-scrollbar pr-2 relative z-10 flex flex-col">
-        {messages.map((msg, i) => (
-          <div key={i} className={`text-[11px] font-mono leading-relaxed p-3 rounded-xl shadow-md whitespace-pre-wrap ${msg.role === 'ai' ? 'text-accent bg-[#050816] border border-accent/20 self-start mr-4' : 'text-white bg-primary/20 border border-primary/30 self-end ml-4'}`}>
-            {msg.text}
+      {/* Messages Feed */}
+      <div className="flex-1 overflow-y-auto my-3 space-y-3 pr-1 text-xs custom-scrollbar max-h-[180px]">
+        {messages.map((msg) => (
+          <div
+            key={msg.id}
+            className={`flex gap-2.5 ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+          >
+            {msg.sender === 'ai' && (
+              <div className="w-6 h-6 rounded-md bg-cyan-500/20 border border-cyan-400/30 flex items-center justify-center text-cyan-300 shrink-0 mt-0.5">
+                <Bot className="w-3.5 h-3.5" />
+              </div>
+            )}
+            <div
+              className={`p-3 rounded-xl max-w-[85%] leading-relaxed ${
+                msg.sender === 'user'
+                  ? 'bg-blue-600 text-white font-medium rounded-br-none'
+                  : 'bg-white/5 border border-white/10 text-cyan-100/90 rounded-bl-none font-mono text-[11px]'
+              }`}
+            >
+              {msg.text.split('\n').map((line, i) => (
+                <p key={i} className={line.startsWith('-') || line.startsWith('•') || line.match(/^\d\./) ? 'ml-2 my-0.5' : 'mb-1'}>
+                  {line}
+                </p>
+              ))}
+            </div>
+            {msg.sender === 'user' && (
+              <div className="w-6 h-6 rounded-md bg-blue-600/30 border border-blue-400/30 flex items-center justify-center text-white shrink-0 mt-0.5">
+                <User className="w-3.5 h-3.5" />
+              </div>
+            )}
           </div>
         ))}
-        {isTyping && (
-          <div className="text-[11px] font-mono text-accent/50 bg-[#050816] border border-white/5 p-3 rounded-xl animate-pulse self-start mr-4 flex items-center gap-2">
-            <Sparkles className="w-3 h-3 animate-spin" /> Processing...
+        {loading && (
+          <div className="text-[10px] font-mono text-cyan-400/70 animate-pulse flex items-center gap-2">
+            <Bot className="w-3 h-3 text-cyan-400" /> Processing query with Gemini Engine...
           </div>
         )}
-        <div ref={messagesEndRef} />
       </div>
 
-      <form onSubmit={handleSend} className="relative mt-auto z-10">
+      {/* Input Field */}
+      <div className="flex items-center gap-2 pt-2 border-t border-white/10">
         <input
           type="text"
           value={input}
           onChange={(e) => setInput(e.target.value)}
-          placeholder="Ask AI CFO..."
-          className="w-full bg-[#050816] border border-white/10 rounded-lg pl-3 pr-10 py-2.5 text-xs text-white outline-none focus:border-accent/50 transition-all font-mono"
+          onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+          placeholder="Ask AI CFO in ANY language..."
+          className="flex-1 bg-[#050816] border border-white/10 rounded-xl px-3 py-2 text-xs text-white placeholder:text-white/30 focus:outline-none focus:border-cyan-400/50 transition-colors font-mono"
         />
         <button
-          type="submit"
-          disabled={!input.trim() || isTyping}
-          className="absolute right-1.5 top-1.5 p-1.5 bg-accent text-black rounded hover:bg-cyan-300 transition-all disabled:opacity-50"
+          onClick={handleSend}
+          className="p-2 bg-cyan-500 hover:bg-cyan-400 text-black rounded-xl transition-all shadow-[0_0_12px_rgba(34,211,238,0.3)] active:scale-95"
         >
-          <Send className="w-3 h-3" />
+          <Send className="w-3.5 h-3.5" />
         </button>
-      </form>
+      </div>
     </div>
   );
-};
+}
