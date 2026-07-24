@@ -1,9 +1,8 @@
 ﻿"use client";
 import React, { useState, useEffect } from 'react';
 
-// Dynamic Graph: Upar jayega toh Green, Niche aayega toh Red
 const TrendGraph = ({ isUp }: { isUp: boolean }) => {
-  const color = isUp ? "#34D399" : "#EF4444"; // 34D399 = Green, EF4444 = Red
+  const color = isUp ? "#34D399" : "#EF4444";
   return (
     <svg width="60" height="24" viewBox="0 0 60 24" fill="none" xmlns="http://www.w3.org/2000/svg">
       {isUp ? (
@@ -16,38 +15,76 @@ const TrendGraph = ({ isUp }: { isUp: boolean }) => {
 };
 
 export function MarketOverview() {
-  // Base Data exactly matching your current real market screenshot (Market is DOWN)
+  // Asli base data (Aaj ke real market ke hisaab se)
   const [marketData, setMarketData] = useState({
     nifty: { price: 23869.60, change: -0.53, name: 'NIFTY 50' },
     sp500: { price: 5427.13, change: -0.16, name: 'S&P 500' },
     dow: { price: 39853.87, change: -0.14, name: 'DOW JONES' },
-    nasdaq: { price: 17342.41, change: -0.06, name: 'NASDAQ' },
+    nasdaq: { price: 25137.69, change: -2.15, name: 'NASDAQ' }, // Exact your screenshot data
   });
 
-  // Simulator: Makes the numbers tick up and down like a real live market terminal
   useEffect(() => {
-    const interval = setInterval(() => {
-      setMarketData(prev => {
-        // Small random fluctuations to simulate live ticks
-        const fluctuatePrice = (val: number, max: number) => val + (Math.random() * max * 2 - max);
-        const fluctuateChange = (val: number) => val + (Math.random() * 0.02 - 0.01);
+    const fetchRealMarketData = async () => {
+      try {
+        // Asli Yahoo Finance Index IDs
+        const symbols = [
+          { key: 'nifty', id: '^NSEI', name: 'NIFTY 50' },
+          { key: 'sp500', id: '^GSPC', name: 'S&P 500' },
+          { key: 'dow', id: '^DJI', name: 'DOW JONES' },
+          { key: 'nasdaq', id: '^IXIC', name: 'NASDAQ' }
+        ];
+
+        const updatedData = { ...marketData };
+        let hasChanges = false;
+
+        for (const sym of symbols) {
+          // Asli data fetch karne ke liye proxy taaki browser block na kare
+          const url = `https://query1.finance.yahoo.com/v8/finance/chart/${sym.id}?interval=1d&range=1d`;
+          const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(url)}`;
+          
+          const res = await fetch(proxyUrl, { cache: 'no-store' });
+          if (!res.ok) continue;
+          
+          const json = await res.json();
+          const parsed = JSON.parse(json.contents);
+          
+          if (parsed.chart && parsed.chart.result && parsed.chart.result.length > 0) {
+            const meta = parsed.chart.result[0].meta;
+            const price = meta.regularMarketPrice;
+            const prevClose = meta.chartPreviousClose;
+            
+            if (price && prevClose) {
+              const changePercent = ((price - prevClose) / prevClose) * 100;
+              
+              updatedData[sym.key as keyof typeof updatedData] = {
+                price: price,
+                change: changePercent,
+                name: sym.name
+              };
+              hasChanges = true;
+            }
+          }
+        }
         
-        return {
-          nifty: { ...prev.nifty, price: fluctuatePrice(prev.nifty.price, 3), change: fluctuateChange(prev.nifty.change) },
-          sp500: { ...prev.sp500, price: fluctuatePrice(prev.sp500.price, 1), change: fluctuateChange(prev.sp500.change) },
-          dow: { ...prev.dow, price: fluctuatePrice(prev.dow.price, 5), change: fluctuateChange(prev.dow.change) },
-          nasdaq: { ...prev.nasdaq, price: fluctuatePrice(prev.nasdaq.price, 2), change: fluctuateChange(prev.nasdaq.change) }
-        };
-      });
-    }, 2500); // Ticks every 2.5 seconds
+        if (hasChanges) {
+          setMarketData(updatedData);
+        }
+      } catch (error) {
+        console.error("Live fetch failed, holding real static data...");
+      }
+    };
 
+    // Pehli baar load hone par real data layega
+    fetchRealMarketData();
+    
+    // Har 60 second mein real API se check karega
+    const interval = setInterval(fetchRealMarketData, 60000);
     return () => clearInterval(interval);
-  }, []);
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Card Generator with Auto Red/Green Logic
   const getCard = (dataKey: string) => {
     const data = marketData[dataKey as keyof typeof marketData];
-    const isUp = data.change >= 0; // True if positive, False if negative
+    const isUp = data.change >= 0; 
     const colorClass = isUp ? 'text-emerald-400' : 'text-red-500';
     const sign = isUp ? '+' : '';
 
