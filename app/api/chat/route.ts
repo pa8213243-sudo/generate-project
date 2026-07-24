@@ -8,7 +8,7 @@ export async function POST(req: NextRequest) {
   try {
     if (!apiKey) {
       return NextResponse.json(
-        { error: "GEMINI_API_KEY is missing on Netlify server" },
+        { error: "GEMINI_API_KEY Netlify environment variable mein nahi mila." },
         { status: 500 }
       );
     }
@@ -19,33 +19,32 @@ export async function POST(req: NextRequest) {
     }
 
     const userMessage = messages[messages.length - 1].text;
-    const prompt = `You are J.A.R.V.I.S., an elite AI CFO assistant for Parvej Alam Ansari. Answer clearly, accurately, and concisely in the same language as the user.\n\nUser Question: ${userMessage}`;
+    const prompt = `You are J.A.R.V.I.S., an elite AI CFO assistant for Parvej Alam Ansari. Answer clearly, accurately, and concisely in the exact same language used by the user.\n\nUser Question: ${userMessage}`;
 
-    // List of official Google Gemini models to try automatically
-    const modelsToTry = [
-      "gemini-1.5-flash",
-      "gemini-1.5-pro",
-      "gemini-2.0-flash-exp",
-      "gemini-pro"
+    // Active, non-retired Google Gemini API models (2.5 & 3.5 series)
+    const activeModels = [
+      "gemini-2.5-flash",
+      "gemini-3.5-flash-lite",
+      "gemini-2.5-pro"
     ];
 
     let responseText = "";
     let lastError = null;
 
-    for (const modelName of modelsToTry) {
+    for (const modelName of activeModels) {
       try {
         const model = genAI.getGenerativeModel({ model: modelName });
         const result = await model.generateContent(prompt);
         responseText = result.response.text();
-        if (responseText) break; // Success! Stop checking further models
+        if (responseText) break; // Connected successfully!
       } catch (err: any) {
         lastError = err;
-        console.warn(`Model ${modelName} returned error, falling back to next...`);
+        console.warn(`Model ${modelName} returned error, switching to next active model...`);
       }
     }
 
     if (!responseText) {
-      throw lastError || new Error("All valid Gemini models failed to respond");
+      throw lastError || new Error("Unable to connect to Google Gemini active models.");
     }
 
     return NextResponse.json({ reply: responseText });
