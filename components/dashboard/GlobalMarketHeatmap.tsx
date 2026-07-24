@@ -3,68 +3,108 @@ import React from 'react';
 
 export default function GlobalMarketHeatmap() {
   return (
-    <div className="bg-[#0B1120] p-6 rounded-2xl border border-white/10 w-full h-full flex flex-col relative overflow-hidden">
+    <div className="bg-[#0B1120] p-6 rounded-2xl border border-white/10 w-full h-full flex flex-col">
       
       {/* Header Section */}
-      <div className="flex justify-between items-start z-20 mb-6">
+      <div className="flex justify-between items-start mb-4">
         <div>
-          <h2 className="text-sm md:text-base font-bold text-white font-space tracking-widest uppercase">GLOBAL MARKET HEATMAP</h2>
-          <p className="text-xs text-white/50">Real-time | Interactive | Financial Grade</p>
+          <h2 className="text-sm md:text-base font-bold text-white font-space tracking-widest uppercase">GLOBAL SECTOR HEATMAP</h2>
+          <p className="text-xs text-white/50">Market Cap Weighted | Daily Performance</p>
         </div>
-        <div className="bg-[#111827] border border-white/10 px-3 py-1 rounded-md text-xs text-white/60 font-bold">
-          7D ▼
+        <div className="bg-[#111827] border border-white/10 px-3 py-1 rounded-md text-xs text-white/60 font-bold hover:bg-white/5 cursor-pointer transition-colors">
+          1D ▼
         </div>
       </div>
 
-      {/* Map & Heatmap Container */}
-      <div className="relative flex-1 w-full flex items-center justify-center min-h-[250px]">
-        
-        {/* 1. Tumhara Upload Kiya Hua Asli Map (Background) */}
-        <div className="absolute inset-0 w-full h-full flex items-center justify-center pointer-events-none opacity-30 mix-blend-lighten">
-          <img 
-            src="/assets/earth_bump.jpg" 
-            alt="World Map" 
-            className="w-[95%] h-[95%] object-contain filter grayscale contrast-125"
-          />
-        </div>
+      {/* Real Financial Treemap (Finviz Style) */}
+      <div className="flex-1 w-full min-h-[250px] rounded-lg overflow-hidden flex flex-col gap-1">
+         
+         {/* Top Row: Tech (Huge) & Energy (UAE/MENA Focus) */}
+         <div className="flex w-full h-1/2 gap-1">
+            
+            {/* Tech Sector */}
+            <div className="w-3/5 h-full flex flex-col gap-1">
+               <div className="w-full h-2/3 flex gap-1">
+                  <div className="w-1/2 h-full bg-emerald-500 flex flex-col items-center justify-center text-white p-1 hover:brightness-110 transition cursor-pointer shadow-inner">
+                     <span className="font-bold text-sm md:text-lg tracking-wider">NVDA</span>
+                     <span className="text-xs md:text-sm font-mono">+4.25%</span>
+                  </div>
+                  <div className="w-1/2 h-full bg-emerald-600 flex flex-col items-center justify-center text-white p-1 hover:brightness-110 transition cursor-pointer shadow-inner">
+                     <span className="font-bold text-sm md:text-base tracking-wider">MSFT</span>
+                     <span className="text-xs font-mono">+1.12%</span>
+                  </div>
+               </div>
+               <div className="w-full h-1/3 bg-red-500 flex flex-col items-center justify-center text-white p-1 hover:brightness-110 transition cursor-pointer shadow-inner">
+                  <span className="font-bold text-sm tracking-wider">AAPL</span>
+                  <span className="text-xs font-mono">-0.85%</span>
+               </div>
+            </div>
 
-        {/* 2. Heatmap Glowing Shapes (Overlay) */}
-        <svg viewBox="0 0 800 400" className="absolute inset-0 w-full h-full z-10 drop-shadow-2xl">
-          {/* North America */}
-          <path d="M 180 120 Q 250 80 280 180 Q 220 220 150 160 Z" fill="rgba(34, 197, 94, 0.2)" stroke="#22c55e" strokeWidth="1.5" />
-          <circle cx="210" cy="150" r="3" fill="#22c55e" className="animate-ping" />
-          
-          {/* Europe */}
-          <path d="M 380 120 Q 420 80 460 140 Q 420 180 370 140 Z" fill="rgba(234, 179, 8, 0.2)" stroke="#eab308" strokeWidth="1.5" />
-          <circle cx="415" cy="130" r="3" fill="#eab308" className="animate-ping" />
+            {/* Energy Sector (MENA Target) */}
+            <div className="w-2/5 h-full flex flex-col gap-1">
+                <div className="w-full h-1/2 bg-red-600 flex flex-col items-center justify-center text-white p-1 hover:brightness-110 transition cursor-pointer shadow-inner">
+                     <span className="font-bold text-sm tracking-wider">ARAMCO</span>
+                     <span className="text-xs font-mono">-1.50%</span>
+                </div>
+                <div className="w-full h-1/2 flex gap-1">
+                    <div className="w-1/2 h-full bg-emerald-500 flex flex-col items-center justify-center text-white p-1 hover:brightness-110 transition cursor-pointer shadow-inner">
+                         <span className="font-bold text-sm tracking-wider">ADNOC</span>
+                         <span className="text-xs font-mono">+2.10%</span>
+                    </div>
+                    <div className="w-1/2 h-full bg-emerald-700 flex flex-col items-center justify-center text-white p-1 hover:brightness-110 transition cursor-pointer shadow-inner">
+                         <span className="font-bold text-xs tracking-wider">XOM</span>
+                         <span className="text-[10px] font-mono">+0.5%</span>
+                    </div>
+                </div>
+            </div>
+         </div>
 
-          {/* Asia (High Heat for Emerging Markets) */}
-          <path d="M 470 100 Q 600 60 650 180 Q 550 250 460 180 Z" fill="rgba(34, 197, 94, 0.25)" stroke="#22c55e" strokeWidth="1.5" />
-          <circle cx="580" cy="150" r="4" fill="#22c55e" className="animate-pulse" />
+         {/* Bottom Row: Financials & Consumer */}
+         <div className="flex w-full h-1/2 gap-1">
+            
+            {/* Financials */}
+            <div className="w-1/2 h-full flex flex-col gap-1">
+                 <div className="w-full h-full flex gap-1">
+                      <div className="w-1/2 h-full bg-red-500 flex flex-col items-center justify-center text-white p-1 hover:brightness-110 transition cursor-pointer shadow-inner">
+                         <span className="font-bold text-sm tracking-wider">JPM</span>
+                         <span className="text-xs font-mono">-0.90%</span>
+                      </div>
+                      <div className="w-1/2 h-full flex flex-col gap-1">
+                          <div className="w-full h-1/2 bg-emerald-600 flex flex-col items-center justify-center text-white p-1 hover:brightness-110 transition cursor-pointer shadow-inner">
+                             <span className="font-bold text-xs tracking-wider">ENBD</span>
+                             <span className="text-[10px] font-mono">+1.05%</span>
+                          </div>
+                          <div className="w-full h-1/2 bg-[#334155] flex flex-col items-center justify-center text-white p-1 hover:brightness-110 transition cursor-pointer shadow-inner">
+                             <span className="font-bold text-xs tracking-wider">VISA</span>
+                             <span className="text-[10px] font-mono">0.00%</span>
+                          </div>
+                      </div>
+                 </div>
+            </div>
 
-          {/* South America (Low Heat) */}
-          <ellipse cx="260" cy="260" rx="25" ry="50" fill="rgba(59, 130, 246, 0.2)" stroke="#3b82f6" strokeWidth="1.5" transform="rotate(-15 260 260)" />
-          
-          {/* Africa */}
-          <ellipse cx="400" cy="240" rx="35" ry="60" fill="rgba(234, 179, 8, 0.15)" stroke="#eab308" strokeWidth="1.5" />
-          
-          {/* Australia */}
-          <path d="M 580 260 Q 620 240 640 280 Q 600 320 570 280 Z" fill="rgba(59, 130, 246, 0.2)" stroke="#3b82f6" strokeWidth="1.5" />
-        </svg>
-
-        {/* Legend (High/Low Indicator) */}
-        <div className="absolute left-2 bottom-4 z-20 flex flex-col items-center">
-          <span className="text-[10px] text-emerald-400 font-bold mb-1">High</span>
-          <div className="w-1.5 h-16 bg-gradient-to-b from-emerald-400 via-yellow-500 to-blue-600 rounded-full shadow-[0_0_10px_rgba(52,211,153,0.5)]"></div>
-          <span className="text-[10px] text-blue-500 font-bold mt-1">Low</span>
-        </div>
-
+            {/* Consumer / Retail */}
+            <div className="w-1/2 h-full flex gap-1">
+                 <div className="w-2/3 h-full bg-emerald-500 flex flex-col items-center justify-center text-white p-1 hover:brightness-110 transition cursor-pointer shadow-inner">
+                     <span className="font-bold text-sm md:text-base tracking-wider">AMZN</span>
+                     <span className="text-xs font-mono">+3.10%</span>
+                 </div>
+                 <div className="w-1/3 h-full flex flex-col gap-1">
+                      <div className="w-full h-1/2 bg-red-600 flex flex-col items-center justify-center text-white p-1 hover:brightness-110 transition cursor-pointer shadow-inner">
+                         <span className="font-bold text-xs tracking-wider">TSLA</span>
+                         <span className="text-[10px] font-mono">-2.4%</span>
+                      </div>
+                      <div className="w-full h-1/2 bg-red-500 flex flex-col items-center justify-center text-white p-1 hover:brightness-110 transition cursor-pointer shadow-inner">
+                         <span className="font-bold text-xs tracking-wider">WMT</span>
+                         <span className="text-[10px] font-mono">-0.7%</span>
+                      </div>
+                 </div>
+            </div>
+         </div>
       </div>
 
-      {/* Footer Link */}
       <div className="mt-4 text-right z-20">
         <button className="text-cyan-400 text-sm font-semibold hover:text-cyan-300 transition-colors">
-          Explore Global Market →
+          Explore Sectors →
         </button>
       </div>
 
