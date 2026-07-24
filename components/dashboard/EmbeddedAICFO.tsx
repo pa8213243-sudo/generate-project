@@ -13,7 +13,7 @@ export function EmbeddedAICFO() {
     {
       id: '1',
       sender: 'ai',
-      text: "Global Financial Intelligence initialized. Ask me anything in any language - I will analyze and respond in the exact same language.",
+      text: "Global Financial Intelligence initialized. Ask me anything in any language - I will analyze and respond in the exact same language without asterisks.",
     },
   ]);
   const [input, setInput] = useState('');
@@ -34,7 +34,6 @@ export function EmbeddedAICFO() {
     setLoading(true);
 
     try {
-      // Calling your safe backend Gemini API route
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -57,7 +56,7 @@ export function EmbeddedAICFO() {
         {
           id: (Date.now() + 1).toString(),
           sender: 'ai',
-          text: "System Note: Please check your GEMINI_API_KEY in .env.local file. Network endpoint re-syncing.",
+          text: "System Note: Please verify GEMINI_API_KEY in Netlify Environment Variables.",
         },
       ]);
     } finally {
