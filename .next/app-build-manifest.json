@@ -1,9 +1,9 @@
 {
   "pages": {
-    "/page": [
+    "/company-explorer/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/page.js"
+      "static/chunks/app/company-explorer/page.js"
     ],
     "/layout": [
       "static/chunks/webpack.js",
@@ -11,15 +11,15 @@
       "static/css/app/layout.css",
       "static/chunks/app/layout.js"
     ],
-    "/market/page": [
+    "/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/market/page.js"
+      "static/chunks/app/page.js"
     ],
-    "/company-explorer/page": [
+    "/financial-models/page": [
       "static/chunks/webpack.js",
       "static/chunks/main-app.js",
-      "static/chunks/app/company-explorer/page.js"
+      "static/chunks/app/financial-models/page.js"
     ]
   }
 }

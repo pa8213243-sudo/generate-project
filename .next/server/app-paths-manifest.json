@@ -1,5 +1,5 @@
 {
+  "/company-explorer/page": "app/company-explorer/page.js",
   "/page": "app/page.js",
-  "/market/page": "app/market/page.js",
-  "/company-explorer/page": "app/company-explorer/page.js"
+  "/financial-models/page": "app/financial-models/page.js"
 }
