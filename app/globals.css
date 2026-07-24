@@ -24,3 +24,12 @@
 }
 
 body { background-color: #02040A; color: white; }
+/* GPU-only (opacity), 13s cycle, ~3.5% shift — imperceptible "breathing" */
+@keyframes heatmap-breathe {
+  0%, 100% { opacity: 0.965; }
+  50%      { opacity: 1; }
+}
+.heatmap-breathe {
+  animation: heatmap-breathe 13s ease-in-out infinite;
+  will-change: opacity;
+}

@@ -9,23 +9,12 @@ import Link from 'next/link';
 
 export default function CommandDashboard() {
   const [devMode, setDevMode] = useState(false);
-  const [hoveredRegion, setHoveredRegion] = useState<string | null>(null);
-
-  // High-Quality Continents Data (Green=Strong, Yellow=Medium, Blue=Weak)
-  const mapRegions = [
-    { id: 'na', name: 'North America', status: 'High', color: '#22c55e', path: 'M 10 10 Q 30 5 45 20 T 35 50 Q 20 40 10 20 Z', glow: 'drop-shadow(0 0 8px #22c55e)' },
-    { id: 'eu', name: 'Europe', status: 'Medium', color: '#eab308', path: 'M 50 15 Q 65 5 75 20 T 60 40 Q 45 30 50 15 Z', glow: 'drop-shadow(0 0 8px #eab308)' },
-    { id: 'as', name: 'Asia', status: 'High', color: '#22c55e', path: 'M 75 10 Q 110 5 125 35 T 85 55 Q 70 30 75 10 Z', glow: 'drop-shadow(0 0 8px #22c55e)' },
-    { id: 'sa', name: 'South America', status: 'Weak', color: '#3b82f6', path: 'M 35 55 Q 50 50 45 80 T 30 90 Q 25 70 35 55 Z', glow: 'drop-shadow(0 0 8px #3b82f6)' },
-    { id: 'af', name: 'Africa', status: 'Medium', color: '#eab308', path: 'M 55 45 Q 75 40 70 75 T 55 85 Q 45 60 55 45 Z', glow: 'drop-shadow(0 0 8px #eab308)' },
-    { id: 'au', name: 'Australia', status: 'Weak', color: '#3b82f6', path: 'M 95 65 Q 115 60 120 80 T 100 90 Q 90 75 95 65 Z', glow: 'drop-shadow(0 0 8px #3b82f6)' },
-  ];
 
   return (
     <div className={`w-full p-6 space-y-6 max-w-[1600px] mx-auto ${devMode ? 'border border-dashed border-accent/50' : ''}`}>
       {devMode && <DevModeOverlay onClose={() => setDevMode(false)} />}
       
-      {/* Top Header - UNCHANGED */}
+      {/* Top Header */}
       <div className="w-full flex items-center justify-between bg-[#0B1120] border border-white/10 rounded-2xl px-6 py-4 shadow-lg">
         <div className="flex items-center gap-3 text-white/40 text-xs font-mono w-full max-w-sm lg:max-w-lg bg-[#050816] px-4 py-2.5 rounded-xl border border-white/5">
           <Terminal className="w-4 h-4 text-accent" /> <span className="hidden sm:inline">Search Company, Market, or Ask AI CFO...</span>
@@ -48,7 +37,7 @@ export default function CommandDashboard() {
         
         {/* COLUMN 1 */}
         <div className="flex flex-col gap-6 h-full">
-          {/* Welcome Card - UNCHANGED */}
+          {/* Welcome Card */}
           <div className="flex-1 rounded-2xl bg-[#0B1120] border border-white/10 p-6 flex flex-col justify-between shadow-xl relative overflow-hidden min-h-[350px]">
             <div className="absolute -right-10 -top-10 w-40 h-40 bg-primary/20 blur-[60px] rounded-full pointer-events-none"/>
             <div>
@@ -68,58 +57,211 @@ export default function CommandDashboard() {
             </div>
           </div>
 
-          {/* 📊 PROFESSIONAL GLOBAL MARKET HEATMAP */}
+          {/* 📊 ORGANIC 9-LAYER FINANCIAL HEATMAP */}
           <div className="flex-1 rounded-2xl bg-[#0B1120] border border-white/10 p-6 flex flex-col justify-between shadow-xl min-h-[300px] relative overflow-hidden">
-            <div className="absolute top-0 right-0 p-4">
-               <span className="bg-white/5 border border-white/10 px-2 py-1 rounded text-[9px] font-mono text-white/60">7D ▼</span>
-            </div>
-            <div>
-              <h3 className="text-xs font-space font-bold text-white tracking-widest uppercase mb-1">GLOBAL MARKET HEATMAP</h3>
-              <p className="text-[10px] text-white/40 mb-6">Real-time | Interactive | Financial Grade</p>
-              
-              <div className="w-full h-44 relative flex items-center justify-center group">
-                
-                {/* Custom Stylized Heatmap SVG */}
-                <svg viewBox="0 0 140 100" className="w-full h-full drop-shadow-2xl">
-                  {mapRegions.map((r) => (
-                    <path
-                      key={r.id}
-                      d={r.path}
-                      fill={hoveredRegion === r.id ? r.color : r.color + '40'}
-                      stroke={hoveredRegion === r.id ? '#ffffff' : r.color}
-                      strokeWidth={hoveredRegion === r.id ? "1" : "0.5"}
-                      className="transition-all duration-300 cursor-pointer"
-                      onMouseEnter={() => setHoveredRegion(r.id)}
-                      onMouseLeave={() => setHoveredRegion(null)}
-                      style={{ filter: hoveredRegion === r.id || r.status === 'High' ? r.glow : 'none' }}
-                    />
-                  ))}
-                  
-                  {/* Glowing Pulse Nodes for Major Financial Hubs */}
-                  <circle cx="28" cy="22" r="1.5" fill="#22c55e" className="animate-ping" style={{ animationDuration: '2s' }} />
-                  <circle cx="95" cy="30" r="1.5" fill="#22c55e" className="animate-ping" style={{ animationDuration: '2.5s' }} />
-                  <circle cx="62" cy="25" r="1" fill="#eab308" className="animate-pulse" />
-                </svg>
-
-                {/* Heatmap Legend */}
-                <div className="absolute bottom-0 left-0 flex flex-col gap-1 z-30">
-                  <span className="text-[8px] font-mono text-success tracking-wider">High</span>
-                  <div className="w-1.5 h-10 bg-gradient-to-t from-blue-600 via-warning to-success rounded-full mx-auto"></div>
-                  <span className="text-[8px] font-mono text-blue-500 tracking-wider">Low</span>
-                </div>
-                
-                {/* Interactive Tooltip */}
-                {hoveredRegion && (
-                  <div className="absolute top-2 right-10 bg-[#050816]/90 border border-white/20 px-3 py-2 rounded-lg backdrop-blur-md text-left z-40 shadow-xl pointer-events-none">
-                    <div className="text-[10px] font-bold text-white mb-0.5">{mapRegions.find(r => r.id === hoveredRegion)?.name}</div>
-                    <div className={`text-[9px] font-mono ${mapRegions.find(r => r.id === hoveredRegion)?.status === 'High' ? 'text-success' : mapRegions.find(r => r.id === hoveredRegion)?.status === 'Medium' ? 'text-warning' : 'text-blue-500'}`}>
-                      Market Strength: {mapRegions.find(r => r.id === hoveredRegion)?.status}
-                    </div>
-                  </div>
-                )}
+            
+            {/* Top Header */}
+            <div className="flex justify-between items-start z-20">
+              <div>
+                <h3 className="text-xs font-space font-bold text-white tracking-widest uppercase mb-1">GLOBAL MARKET HEATMAP</h3>
+                <p className="text-[10px] text-white/40">Real-time | Interactive | Financial Grade</p>
+              </div>
+              <div className="bg-white/5 border border-white/10 px-2 py-1 rounded text-[9px] font-mono text-white/60 font-bold">
+                7D ▼
               </div>
             </div>
-            <Link href="/market" className="mt-5 text-xs font-mono text-accent hover:text-white flex items-center gap-1 transition-colors w-fit ml-auto">Explore Global Market →</Link>
+
+            {/* Heatmap Container */}
+            <div className="w-full h-48 relative flex items-center justify-center rounded-xl overflow-hidden bg-[#030712] border border-white/10 my-auto">
+
+              {/* LAYER 1: Dark ocean base */}
+              <div className="absolute inset-0 bg-gradient-to-b from-[#020509] via-[#030a16] to-[#020509]" />
+
+              {/* LAYER 2: High-res world map, ~70% opacity, coastlines preserved */}
+              <div className="absolute inset-0 w-full h-full">
+                <img
+                  src="/assets/earth_bump.jpg"
+                  alt="World Map"
+                  className="w-full h-full object-cover opacity-70 saturate-0 brightness-[0.45] contrast-[1.35]"
+                />
+              </div>
+              <div className="absolute inset-0 bg-[#04091a]/40 mix-blend-multiply" />
+
+              {/* LAYERS 3–9: SVG thermal density system */}
+              <svg
+                viewBox="0 0 700 400"
+                preserveAspectRatio="xMidYMid slice"
+                className="absolute inset-0 w-full h-full heatmap-breathe"
+                style={{ mixBlendMode: 'screen' }}
+              >
+                <defs>
+                  {/* Organic distortion filters */}
+                  <filter id="organicL" x="-100%" y="-100%" width="300%" height="300%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.012" numOctaves="2" seed="4" result="n" />
+                    <feDisplacementMap in="SourceGraphic" in2="n" scale="26" />
+                    <feGaussianBlur stdDeviation="20" />
+                  </filter>
+                  <filter id="organicM" x="-100%" y="-100%" width="300%" height="300%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.02" numOctaves="2" seed="9" result="n" />
+                    <feDisplacementMap in="SourceGraphic" in2="n" scale="14" />
+                    <feGaussianBlur stdDeviation="9" />
+                  </filter>
+                  <filter id="organicS" x="-100%" y="-100%" width="300%" height="300%">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.03" numOctaves="2" seed="15" result="n" />
+                    <feDisplacementMap in="SourceGraphic" in2="n" scale="7" />
+                    <feGaussianBlur stdDeviation="4" />
+                  </filter>
+
+                  {/* Fine noise texture */}
+                  <filter id="grain">
+                    <feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="3" result="n" />
+                    <feColorMatrix in="n" type="matrix" values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.018 0" />
+                  </filter>
+
+                  {/* Institutional blue-green color ramps */}
+                  <radialGradient id="cMax" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%"  stopColor="#6ee7b7" stopOpacity="0.95" />
+                    <stop offset="55%" stopColor="#34d399" stopOpacity="0.5" />
+                    <stop offset="100%" stopColor="#34d399" stopOpacity="0" />
+                  </radialGradient>
+                  <radialGradient id="cHigh" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%"  stopColor="#34d399" stopOpacity="0.8" />
+                    <stop offset="60%" stopColor="#10b981" stopOpacity="0.35" />
+                    <stop offset="100%" stopColor="#10b981" stopOpacity="0" />
+                  </radialGradient>
+                  <radialGradient id="cMed" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%"  stopColor="#10b981" stopOpacity="0.5" />
+                    <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0" />
+                  </radialGradient>
+                  <radialGradient id="cLow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%"  stopColor="#22d3ee" stopOpacity="0.3" />
+                    <stop offset="100%" stopColor="#22d3ee" stopOpacity="0" />
+                  </radialGradient>
+
+                  {/* Ambient ocean + edge lighting */}
+                  <radialGradient id="oceanGlow" cx="50%" cy="45%" r="75%">
+                    <stop offset="0%"  stopColor="#0ea5e9" stopOpacity="0.09" />
+                    <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0" />
+                  </radialGradient>
+                </defs>
+
+                {/* LAYER 3: Large regional gradient washes */}
+                <g filter="url(#organicL)">
+                  <ellipse cx="145" cy="128" rx="68" ry="40" fill="url(#cHigh)" transform="rotate(-10 145 128)" />
+                  <ellipse cx="335" cy="97"  rx="42" ry="24" fill="url(#cMed)"  transform="rotate(6 335 97)" />
+                  <ellipse cx="460" cy="163" rx="36" ry="25" fill="url(#cMax)"  transform="rotate(-8 460 163)" />
+                  <ellipse cx="530" cy="112" rx="40" ry="27" fill="url(#cHigh)" transform="rotate(10 530 112)" />
+                  <ellipse cx="228" cy="230" rx="28" ry="21" fill="url(#cLow)"  opacity="0.8" />
+                  <ellipse cx="420" cy="155" rx="30" ry="18" fill="url(#cHigh)" opacity="0.75" />
+                </g>
+
+                {/* LAYER 4: Medium city-cluster gradients */}
+                <g filter="url(#organicM)">
+                  {/* North America */}
+                  <ellipse cx="118" cy="150" rx="18" ry="13" fill="url(#cMax)" />
+                  <ellipse cx="152" cy="168" rx="16" ry="11" fill="url(#cHigh)" />
+                  <ellipse cx="155" cy="128" rx="15" ry="10" fill="url(#cMax)" />
+                  <ellipse cx="176" cy="123" rx="16" ry="11" fill="url(#cMax)" />
+                  <ellipse cx="168" cy="112" rx="12" ry="8"  fill="url(#cMed)" />
+                  <ellipse cx="108" cy="100" rx="11" ry="8"  fill="url(#cMed)" />
+
+                  {/* Europe */}
+                  <ellipse cx="318" cy="93"  rx="11" ry="8" fill="url(#cHigh)" />
+                  <ellipse cx="327" cy="103" rx="12" ry="8" fill="url(#cHigh)" />
+                  <ellipse cx="341" cy="93"  rx="12" ry="8" fill="url(#cHigh)" />
+                  <ellipse cx="333" cy="88"  rx="7"  ry="5" fill="url(#cMed)" />
+                  <ellipse cx="338" cy="104" rx="8"  ry="6" fill="url(#cMed)" />
+                  <ellipse cx="346" cy="114" rx="10" ry="7" fill="url(#cMed)" />
+                  <ellipse cx="345" cy="72"  rx="13" ry="9" fill="url(#cMed)" opacity="0.8" />
+                  <ellipse cx="368" cy="98"  rx="15" ry="10" fill="url(#cLow)" />
+
+                  {/* Middle East (MENA / UAE target) */}
+                  <ellipse cx="431" cy="154" rx="14" ry="9" fill="url(#cHigh)" />
+                  <ellipse cx="416" cy="160" rx="15" ry="10" fill="url(#cMed)" />
+                  <ellipse cx="426" cy="157" rx="7"  ry="5" fill="url(#cHigh)" />
+                  <ellipse cx="418" cy="150" rx="6"  ry="4" fill="url(#cMed)" />
+                  <ellipse cx="406" cy="144" rx="7"  ry="5" fill="url(#cMed)" />
+
+                  {/* India */}
+                  <ellipse cx="456" cy="166" rx="11" ry="8" fill="url(#cMax)" />
+                  <ellipse cx="461" cy="146" rx="12" ry="8" fill="url(#cMax)" />
+                  <ellipse cx="463" cy="181" rx="10" ry="7" fill="url(#cHigh)" />
+                  <ellipse cx="466" cy="173" rx="9"  ry="6" fill="url(#cHigh)" />
+                  <ellipse cx="469" cy="183" rx="9"  ry="6" fill="url(#cHigh)" />
+                  <ellipse cx="457" cy="169" rx="7"  ry="5" fill="url(#cHigh)" />
+
+                  {/* China / APAC */}
+                  <ellipse cx="524" cy="106" rx="12" ry="8" fill="url(#cMax)" />
+                  <ellipse cx="541" cy="121" rx="12" ry="8" fill="url(#cMax)" />
+                  <ellipse cx="525" cy="141" rx="8"  ry="6" fill="url(#cHigh)" />
+                  <ellipse cx="541" cy="141" rx="7"  ry="5" fill="url(#cMed)" />
+                  <ellipse cx="551" cy="106" rx="9"  ry="6" fill="url(#cMed)" />
+                  <ellipse cx="566" cy="106" rx="11" ry="7" fill="url(#cMed)" />
+
+                  {/* Australia */}
+                  <ellipse cx="592" cy="272" rx="15" ry="10" fill="url(#cMed)" />
+                  <ellipse cx="597" cy="278" rx="8"  ry="6" fill="url(#cMed)" opacity="0.7" />
+
+                  {/* South America */}
+                  <ellipse cx="222" cy="218" rx="12" ry="9" fill="url(#cMed)" />
+                  <ellipse cx="212" cy="255" rx="8"  ry="6" fill="url(#cLow)" />
+                  <ellipse cx="202" cy="250" rx="5"  ry="4" fill="url(#cLow)" opacity="0.6" />
+
+                  {/* Africa */}
+                  <ellipse cx="369" cy="288" rx="9" ry="7" fill="url(#cLow)" opacity="0.5" />
+                  <ellipse cx="390" cy="150" rx="7" ry="5" fill="url(#cLow)" opacity="0.45" />
+                </g>
+
+                {/* LAYER 5: Small precise financial hotspots */}
+                <g filter="url(#organicS)">
+                  <ellipse cx="122" cy="152" rx="6" ry="4" fill="url(#cMax)"  opacity="0.85" />
+                  <ellipse cx="150" cy="170" rx="5" ry="4" fill="url(#cHigh)" opacity="0.8" />
+                  <ellipse cx="459" cy="164" rx="5" ry="4" fill="url(#cMax)"  opacity="0.9" />
+                  <ellipse cx="501" cy="190" rx="6" ry="5" fill="url(#cHigh)" opacity="0.9" />
+                  <ellipse cx="533" cy="115" rx="5" ry="4" fill="url(#cMax)"  opacity="0.8" />
+                  <ellipse cx="431" cy="154" rx="4" ry="3" fill="url(#cHigh)" opacity="0.85" />
+                </g>
+
+                {/* LAYER 6: Soft bloom pass */}
+                <g filter="url(#organicL)" opacity="0.22">
+                  <ellipse cx="460" cy="163" rx="48" ry="32" fill="url(#cMax)" />
+                  <ellipse cx="140" cy="130" rx="58" ry="36" fill="url(#cHigh)" />
+                  <ellipse cx="530" cy="112" rx="44" ry="30" fill="url(#cHigh)" />
+                </g>
+
+                {/* LAYER 8: Atmospheric ocean lighting */}
+                <ellipse cx="350" cy="190" rx="360" ry="220" fill="url(#oceanGlow)" />
+
+                {/* LAYER 7: Fine noise texture */}
+                <rect width="700" height="400" filter="url(#grain)" opacity="0.5" />
+              </svg>
+
+              {/* Edge illumination */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{ boxShadow: 'inset 0 0 36px 5px rgba(34,211,238,0.05)' }}
+              />
+
+              {/* LAYER 9: Edge vignette for 3D depth */}
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background: 'radial-gradient(ellipse at center, transparent 55%, rgba(2,5,16,0.55) 100%)',
+                }}
+              />
+
+              {/* Legend */}
+              <div className="absolute bottom-2 left-2 z-20 flex flex-col items-center bg-[#0B1120]/70 backdrop-blur-md px-2 py-1.5 rounded-lg border border-white/10 shadow-lg">
+                <span className="text-[8px] font-mono text-emerald-400 font-bold">High</span>
+                <div className="w-1 h-8 bg-gradient-to-b from-emerald-400 to-blue-500 rounded-full my-1" />
+                <span className="text-[8px] font-mono text-blue-400 font-bold">Low</span>
+              </div>
+            </div>
+
+            {/* Footer Link */}
+            <Link href="/market" className="text-xs font-mono text-accent hover:text-white flex items-center gap-1 transition-colors w-fit ml-auto z-20">
+              Explore Global Market →
+            </Link>
           </div>
         </div>
 
@@ -140,7 +282,7 @@ export default function CommandDashboard() {
           </div>
         </div>
 
-        {/* COLUMN 3 - UNCHANGED */}
+        {/* COLUMN 3 */}
         <div className="flex flex-col gap-6 h-full">
           <div className="min-h-[210px]"><MarketOverview /></div>
           <div className="min-h-[240px]"><EmbeddedAICFO /></div>
@@ -169,7 +311,7 @@ export default function CommandDashboard() {
         </div>
       </div>
 
-      {/* BOTTOM ROW - UNCHANGED */}
+      {/* BOTTOM ROW */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 w-full">
         <Link href="/timeline" className="block lg:col-span-2 rounded-2xl bg-[#0B1120] border border-white/10 p-6 overflow-x-auto custom-scrollbar shadow-xl hover:border-white/30 hover:shadow-cyan-900/20 transition-all group cursor-pointer relative">
           <div className="flex justify-between items-start mb-8">
