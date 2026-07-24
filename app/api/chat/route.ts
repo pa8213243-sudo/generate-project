@@ -8,23 +8,49 @@ export async function POST(req: NextRequest) {
   try {
     if (!apiKey) {
       return NextResponse.json(
-        { error: "GEMINI_API_KEY is missing on server" },
+        { error: "GEMINI_API_KEY is missing on Netlify server" },
         { status: 500 }
       );
     }
 
     const { messages } = await req.json();
+    if (!messages || !Array.isArray(messages) || messages.length === 0) {
+      return NextResponse.json({ error: "No user message provided" }, { status: 400 });
+    }
+
     const userMessage = messages[messages.length - 1].text;
+    const prompt = `You are J.A.R.V.I.S., an elite AI CFO assistant for Parvej Alam Ansari. Answer clearly, accurately, and concisely in the same language as the user.\n\nUser Question: ${userMessage}`;
 
-    // Sahi Model Identifier: gemini-1.5-flash-latest
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash-latest" });
+    // List of official Google Gemini models to try automatically
+    const modelsToTry = [
+      "gemini-1.5-flash",
+      "gemini-1.5-pro",
+      "gemini-2.0-flash-exp",
+      "gemini-pro"
+    ];
 
-    const result = await model.generateContent(`You are an AI CFO assistant for Parvej Alam Ansari. Answer clearly and concisely.\n\nUser: ${userMessage}`);
-    const text = result.response.text();
+    let responseText = "";
+    let lastError = null;
 
-    return NextResponse.json({ reply: text });
+    for (const modelName of modelsToTry) {
+      try {
+        const model = genAI.getGenerativeModel({ model: modelName });
+        const result = await model.generateContent(prompt);
+        responseText = result.response.text();
+        if (responseText) break; // Success! Stop checking further models
+      } catch (err: any) {
+        lastError = err;
+        console.warn(`Model ${modelName} returned error, falling back to next...`);
+      }
+    }
+
+    if (!responseText) {
+      throw lastError || new Error("All valid Gemini models failed to respond");
+    }
+
+    return NextResponse.json({ reply: responseText });
   } catch (error: any) {
-    console.error("Gemini Error:", error);
+    console.error("Gemini Route Error:", error);
     return NextResponse.json(
       { error: error.message || "Failed to generate AI response" },
       { status: 500 }
