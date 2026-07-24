@@ -34,6 +34,7 @@ export function EmbeddedAICFO() {
     setLoading(true);
 
     try {
+      // 1. Correct Endpoint Path (/api/chat)
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -51,14 +52,17 @@ export function EmbeddedAICFO() {
         throw new Error(data.error || "Failed to get AI response");
       }
     } catch {
-      setMessages((prev) => [
-        ...prev,
-        {
-          id: (Date.now() + 1).toString(),
-          sender: 'ai',
-          text: "System Note: Please verify GEMINI_API_KEY in Netlify Environment Variables.",
-        },
-      ]);
+      // 2. Fallback Response agar API call mein koi dikkat aaye
+      setTimeout(() => {
+        setMessages((prev) => [
+          ...prev,
+          {
+            id: (Date.now() + 1).toString(),
+            sender: 'ai',
+            text: "Financial Command Center active. Please ensure GEMINI_API_KEY is set in your Netlify Environment Variables.",
+          },
+        ]);
+      }, 300);
     } finally {
       setLoading(false);
     }
