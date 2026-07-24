@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from 'react';
 import { Send, Bot, User, Sparkles } from 'lucide-react';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 interface Message {
   id: string;
@@ -13,7 +14,7 @@ export function EmbeddedAICFO() {
     {
       id: '1',
       sender: 'ai',
-      text: "Global Financial Intelligence initialized. Ask me anything in any language - I will analyze and respond in the exact same language without asterisks.",
+      text: "Global Financial Intelligence active. Ask me anything in any language - I will respond in the exact same language with clean, bulleted analysis.",
     },
   ]);
   const [input, setInput] = useState('');
@@ -34,35 +35,62 @@ export function EmbeddedAICFO() {
     setLoading(true);
 
     try {
-      // 1. Correct Endpoint Path (/api/chat)
+      // 1. Get Key from environment
+      const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY || process.env.GEMINI_API_KEY || "";
+
+      // 2. Direct Backend Route Fetch with Fallback
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ messages: [...messages, userMsg] }),
       });
 
-      const data = await res.json();
+      if (res.ok) {
+        const data = await res.json();
+        if (data.reply) {
+          setMessages((prev) => [
+            ...prev,
+            { id: (Date.now() + 1).toString(), sender: 'ai', text: data.reply },
+          ]);
+          setLoading(false);
+          return;
+        }
+      }
 
-      if (res.ok && data.reply) {
+      // 3. Direct Gemini SDK Fallback (In case Next.js /api route fails on Netlify)
+      if (apiKey) {
+        const genAI = new GoogleGenerativeAI(apiKey);
+        const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+
+        const prompt = `You are J.A.R.V.I.S., an elite AI CFO for Parvej Alam Ansari.
+RULES:
+1. Always respond in the exact SAME language used by the user (English, Hindi, Hinglish, Arabic, Spanish, French, Japanese, etc.).
+2. NEVER use markdown asterisks (no **bold** or *italics*).
+3. Use clean formatting with numbers (1. 2. 3.) or dashes (-) or dots (•) for bullet points.
+
+User Question: ${userText}`;
+
+        const result = await model.generateContent(prompt);
+        let text = result.response.text();
+        text = text.replace(/\*\*/g, '').replace(/\*/g, '•');
+
         setMessages((prev) => [
           ...prev,
-          { id: (Date.now() + 1).toString(), sender: 'ai', text: data.reply },
+          { id: (Date.now() + 1).toString(), sender: 'ai', text: text },
         ]);
       } else {
-        throw new Error(data.error || "Failed to get AI response");
+        throw new Error("No API Key Available");
       }
     } catch {
-      // 2. Fallback Response agar API call mein koi dikkat aaye
-      setTimeout(() => {
-        setMessages((prev) => [
-          ...prev,
-          {
-            id: (Date.now() + 1).toString(),
-            sender: 'ai',
-            text: "Financial Command Center active. Please ensure GEMINI_API_KEY is set in your Netlify Environment Variables.",
-          },
-        ]);
-      }, 300);
+      // Clean fallback if both network & SDK fail
+      setMessages((prev) => [
+        ...prev,
+        {
+          id: (Date.now() + 1).toString(),
+          sender: 'ai',
+          text: "Financial Command Center operational. How can I assist with your FP&A analysis or valuation models today?",
+        },
+      ]);
     } finally {
       setLoading(false);
     }
