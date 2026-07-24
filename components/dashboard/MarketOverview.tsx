@@ -1,48 +1,87 @@
 ﻿"use client";
-import React from 'react';
-import { AreaChart, Area, ResponsiveContainer, Tooltip, YAxis } from 'recharts';
+import React, { useState, useEffect } from 'react';
 
-const d1 = [{ v: 40 }, { v: 42 }, { v: 41 }, { v: 45 }, { v: 43 }, { v: 47 }, { v: 46 }];
-const d2 = [{ v: 20 }, { v: 25 }, { v: 22 }, { v: 28 }, { v: 27 }, { v: 30 }, { v: 29 }];
-
-const Ticker = ({ title, val, change, data }: { title: string; val: string; change: string; data: { v: number }[] }) => (
-  <div className="flex flex-col justify-between p-3 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 transition-colors">
-    <div className="text-[10px] font-bold text-white/70">{title}</div>
-    <div className="text-[13px] font-mono text-white font-bold mt-1.5">{val}</div>
-    <div className="flex items-center justify-between mt-2 gap-2">
-      <span className="text-[10px] font-mono text-success">{change}</span>
-      <div className="w-16 h-6">
-        <ResponsiveContainer width="100%" height="100%">
-          <AreaChart data={data}>
-            <defs>
-              <linearGradient id={`gradient-${title.replace(/\s+/g, '-')}`} x1="0" y1="0" x2="0" y2="1">
-                <stop offset="0%" stopColor="#22d3ee" stopOpacity={0.65} />
-                <stop offset="100%" stopColor="#22d3ee" stopOpacity={0} />
-              </linearGradient>
-            </defs>
-            <YAxis domain={['dataMin', 'dataMax']} hide />
-            <Tooltip cursor={false} content={() => null} />
-            <Area type="monotone" dataKey="v" stroke="#22d3ee" strokeWidth={2} fill={`url(#gradient-${title.replace(/\s+/g, '-')})`} dot={false} />
-          </AreaChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-  </div>
-);
-
-export const MarketOverview = () => {
+// Dynamic Graph: Upar jayega toh Green, Niche aayega toh Red
+const TrendGraph = ({ isUp }: { isUp: boolean }) => {
+  const color = isUp ? "#34D399" : "#EF4444"; // 34D399 = Green, EF4444 = Red
   return (
-    <div className="flex flex-col h-full rounded-2xl bg-[#0B1120] border border-white/10 p-5 shadow-xl">
-      <div className="flex items-center justify-between mb-4">
-        <h3 className="text-xs font-space font-bold text-white tracking-widest uppercase">MARKET OVERVIEW</h3>
-        <span className="flex items-center gap-1 text-[9px] text-success font-mono uppercase bg-success/10 px-2 py-0.5 rounded-full"><span className="w-1.5 h-1.5 bg-success rounded-full animate-pulse"/> Live</span>
+    <svg width="60" height="24" viewBox="0 0 60 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      {isUp ? (
+        <path d="M2 20C10 20 18 8 28 12C38 16 48 4 58 4" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+      ) : (
+        <path d="M2 4C10 4 18 16 28 12C38 8 48 20 58 20" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/>
+      )}
+    </svg>
+  );
+};
+
+export function MarketOverview() {
+  // Base Data exactly matching your current real market screenshot (Market is DOWN)
+  const [marketData, setMarketData] = useState({
+    nifty: { price: 23869.60, change: -0.53, name: 'NIFTY 50' },
+    sp500: { price: 5427.13, change: -0.16, name: 'S&P 500' },
+    dow: { price: 39853.87, change: -0.14, name: 'DOW JONES' },
+    nasdaq: { price: 17342.41, change: -0.06, name: 'NASDAQ' },
+  });
+
+  // Simulator: Makes the numbers tick up and down like a real live market terminal
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setMarketData(prev => {
+        // Small random fluctuations to simulate live ticks
+        const fluctuatePrice = (val: number, max: number) => val + (Math.random() * max * 2 - max);
+        const fluctuateChange = (val: number) => val + (Math.random() * 0.02 - 0.01);
+        
+        return {
+          nifty: { ...prev.nifty, price: fluctuatePrice(prev.nifty.price, 3), change: fluctuateChange(prev.nifty.change) },
+          sp500: { ...prev.sp500, price: fluctuatePrice(prev.sp500.price, 1), change: fluctuateChange(prev.sp500.change) },
+          dow: { ...prev.dow, price: fluctuatePrice(prev.dow.price, 5), change: fluctuateChange(prev.dow.change) },
+          nasdaq: { ...prev.nasdaq, price: fluctuatePrice(prev.nasdaq.price, 2), change: fluctuateChange(prev.nasdaq.change) }
+        };
+      });
+    }, 2500); // Ticks every 2.5 seconds
+
+    return () => clearInterval(interval);
+  }, []);
+
+  // Card Generator with Auto Red/Green Logic
+  const getCard = (dataKey: string) => {
+    const data = marketData[dataKey as keyof typeof marketData];
+    const isUp = data.change >= 0; // True if positive, False if negative
+    const colorClass = isUp ? 'text-emerald-400' : 'text-red-500';
+    const sign = isUp ? '+' : '';
+
+    return (
+      <div key={dataKey} className="bg-[#111827] p-4 rounded-xl border border-white/5 hover:border-white/10 transition-colors flex flex-col justify-between">
+        <p className="text-sm text-white/60 mb-2 font-bold tracking-wider">{data.name}</p>
+        <p className="text-2xl font-mono font-bold text-white mb-2">
+          {data.price.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+        </p>
+        <div className="flex justify-between items-center mt-1">
+          <p className={`text-sm font-mono font-bold ${colorClass}`}>
+            {sign}{data.change.toFixed(2)}%
+          </p>
+          <TrendGraph isUp={isUp} />
+        </div>
       </div>
-      <div className="grid grid-cols-2 gap-3 flex-1">
-        <Ticker title="NIFTY 50" val="24,543.15" change="+0.65%" data={d1} />
-        <Ticker title="S&P 500" val="5,505.00" change="+0.71%" data={d2} />
-        <Ticker title="DOW JONES" val="40,287.53" change="+0.49%" data={d1} />
-        <Ticker title="NASDAQ" val="17,726.94" change="+0.93%" data={d2} />
+    );
+  };
+
+  return (
+    <div className="bg-[#0B1120] p-6 rounded-2xl border border-white/10 w-full h-full">
+      <div className="flex justify-between items-center mb-6">
+        <h2 className="text-sm md:text-base font-bold text-white font-space tracking-widest uppercase">MARKET OVERVIEW</h2>
+        <span className="flex items-center gap-2 text-xs font-bold text-emerald-400 bg-emerald-400/10 px-3 py-1 rounded-full border border-emerald-400/20">
+          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+          LIVE
+        </span>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        {getCard('nifty')}
+        {getCard('sp500')}
+        {getCard('dow')}
+        {getCard('nasdaq')}
       </div>
     </div>
   );
-};
+}
