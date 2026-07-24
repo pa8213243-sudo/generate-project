@@ -1,7 +1,5 @@
 {
   "/page": "app/page.js",
-  "/projects/page": "app/projects/page.js",
-  "/financial-models/page": "app/financial-models/page.js",
-  "/timeline/page": "app/timeline/page.js",
-  "/resume/page": "app/resume/page.js"
+  "/market/page": "app/market/page.js",
+  "/company-explorer/page": "app/company-explorer/page.js"
 }
